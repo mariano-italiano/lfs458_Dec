@@ -91,8 +91,8 @@ then
 	#sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	#sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-        echo "[TASK 14] Install Calico networking"
-	su -c 'kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml' student >/dev/null 2>&1
+        #echo "[TASK 14] Install Calico networking"
+	#su -c 'kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml' student >/dev/null 2>&1
 	#sed -i 's/# - name: CALICO_IPV4POOL_CIDR/- name: CALICO_IPV4POOL_CIDR/g' calico.yaml >/dev/null 2>&1
 	#sed -i 's|#   value: "192.168.0.0/16"|  value: "192.168.0.0/16"|g' calico.yaml >/dev/null 2>&1
         #kubectl apply -f calico.yaml >/dev/null 2>&1
