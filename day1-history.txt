@@ -1,0 +1,109 @@
+kubectl get nodes
+cilium install --version 1.14.4
+kubectl get nodes
+kubectl get pods -n kube-system
+sudo apt-get install bash-completion -y
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> $HOME/.bashrc
+kubeadm token create --print-join-command
+kubectl get nodes
+sudo poweroff
+kubectl get ndoes
+kubectl get nodes
+kubectl get pods -n kube-system -o wide
+kubectl get nodes -o json | jq '.items[].spec.taints'
+sudo apt-get install jq -y
+kubectl get nodes -o json | jq '.items[].spec.taints'
+kubectl get pods
+kubectl get namespaces 
+kubectl get ns
+kubectl get pods --all-namespaces 
+kubectl get pods --all-namespaces | grep etcd
+kubectl create ns lfs458
+kubectl get ns
+kubectl describe ns lfs458 
+kubectl describe pod etcd-k8s-master
+kubectl describe pod etcd-k8s-master -n kube-system 
+sudo vi /etc/kubernetes/manifests/etcd.yaml 
+kubectl -n kube-system exec -it etcd-k8s-master -- sh -c "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \
+ endpoint health"
+kubectl -n kube-system exec -it etcd-k8s-master -- sh -c "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \
+ --endpoints=https://127.0.0.1:2379 member list"
+kubectl -n kube-system exec -it etcd-k8s-master -- sh -c "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \
+ --endpoints=https://127.0.0.1:2379 member list -w table"
+kubectl -n kube-system exec -it etcd-k8s-master -- sh -c "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \
+ --endpoints=https://127.0.0.1:2379 snapshot save /var/lib/etcd/etcd_backup.db"
+ls -la /var/lib/etcd/
+sudo ls -la /var/lib/etcd/
+sudo ls -hla /var/lib/etcd/
+cd /var/lib/etcd/
+sudo cd /var/lib/etcd/
+sudo -i
+kubectl get nodes
+kubectl get pods -n kube-system 
+sudo -i
+kubectl get pods -n kube-system 
+kubectl get nodes
+etcdctl
+sudo apt-get install etcdctl
+sudo apt-get install etcd-client 
+etcdctl
+sudo ETCDCTL_API=3 etcdctl snapshot restore /var/lib/etcd/etcd_backup.db --initial-cluster etcd-k8s-master=https://192.168.1.100:2380 --initial-advertise-peer-urls https://192.168.1.100:2380 --name etcd-k8s-master --data-dir /var/lib/etcd
+sudo mv /var/lib/etcd/etcd_backup.db /tmp/
+rm -rf /var/lib/etcd/
+sudo rm -rf /var/lib/etcd/
+sudo ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcd_backup.db --initial-cluster etcd-k8s-master=https://192.168.1.100:2380 --initial-advertise-peer-urls https://192.168.1.100:2380 --name etcd-k8s-master --data-dir /var/lib/etcd
+kubectl get nodes
+kubectl -n kube-system exec -it etcd-k8s-master -- sh -c "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \
+ --endpoints=https://127.0.0.1:2379 member list -w table"
+sudo ls -la /var/lib/etcd/
+kubectl get pods -A
+kubectl get pods -A -o wide
+sudo apt-get install -y kubeadm=1.28.1-00 --allow-change-held-packages
+kubeadm version
+kubectl drain k8s-master 
+kubectl drain k8s-master --ignore-daemonsets 
+sudo kubeadm upgrade plan v1.28.1
+sudo kubeadm upgrade apply v1.28.1
+kubectl get nodes
+sudo apt-get install -y kubelet=1.28.1-00 kubectl=1.28.1-00
+sudo apt-get install -y kubelet=1.28.1-00 kubectl=1.28.1-00 --allow-change-held-packages
+sudo systemctl daemon-reload 
+sudo systemctl restart kubelet.service 
+kubectl get nodes
+kubectl uncordon k8s-master 
+kubectl get nodes
+kubectl get pods -n kube-system 
+kubectl get pods -n kube-system  -o wide
+vi pod.yaml
+kubectl apply -f pod.yaml
+kubectl get pods -A -o wide
+kubectl drain worker01 --ignore-daemonsets 
+kubectl get pods -A -o wide
+kubectl drain worker01 --ignore-daemonsets --force
+kubectl get pods -A -o wide
+kubectl uncordon worker01
+kubectl get pods -A -o wide
+kubectl get nodes
+history
+sudo -i
+kubectl nodes
+sudo -i
+kubectl get nodes
+history| awk '$1 > 7' | cut -c 8- 
+history| awk '$1 > 7' | cut -c 8- > day1-history.txt
