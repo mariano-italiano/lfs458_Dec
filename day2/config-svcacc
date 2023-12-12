@@ -1,0 +1,18 @@
+apiVersion: v1
+clusters:
+- cluster:
+    insecure-skip-tls-verify: true
+    server: https://k8s-master:6443
+  name: test
+contexts:
+- context:
+    cluster: test
+    user: my-svc-acc
+  name: default
+current-context: default
+kind: Config
+preferences: {}
+users:
+- name: my-svc-acc
+  user:
+    token: eyJhbGciOiJSUzI1NiIsImtpZCI6InVTUlVISUFablF5VC1yb1NMRHhhNHhjaThfYi1YQlluUk51bzNaeG9PUFkifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzAyMzgzNDQ3LCJpYXQiOjE3MDIzNzk4NDcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0Iiwic2VydmljZWFjY291bnQiOnsibmFtZSI6Im15LXN2Yy1hY2MiLCJ1aWQiOiI4ZTUxY2M4Yy0yYzkwLTRmNTAtYWU3OS00OTFmYjQ0YzVlZWMifX0sIm5iZiI6MTcwMjM3OTg0Nywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6bXktc3ZjLWFjYyJ9.UQZXiY5q8-Zt3kBtf9pxaFvl-1JRVtDI6nBb74N5OCViiHnJKvMl0JYdOPRmOTwTeDnfPRXJoOrz_2eE9h8ZQhiaEXeEwSQlmbqNVjGMAoWHad5Sn55bjk78gZrQOYHEXLQbbpAhty2hSt6UOes8iqHL67nLMKdUDunPoE-vrhQNPPV_1F2HzT04gEMbB4Dpu01rvQN9yfvgHhLY6Rn8j6cmPNAKXaz6ph8QhrVmMNzCxVnlHLco35kbbTrsLoxTHkOVgvBHq94KYtm42vkwaPi_6juEg1m4F3TYYA8d34AyOCauhwz5KIEDbyvtqJDSDIdDkAXaN1PAYa2uUgcAtg
