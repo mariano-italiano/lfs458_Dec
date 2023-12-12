@@ -182,3 +182,106 @@ sudo -i
 vi ../day1-history.txt 
 history
 history| awk '$1 > 130' | cut -c 8- > ../day2-history.txt 
+git status
+git add .
+git commit -m "Adding day 2 files"
+git push
+git status
+git add ../day2-history.txt 
+git commit -m "Adding day 2 files"
+git push
+vi sidecar-pod.yaml
+kubectl apply -f sidecar-pod.yaml
+kubectl get pods
+kubectl exec -it my-pod -- /bin/sh
+kubectl exec -it sidecar-pod -- /bin/sh
+kubectl exec -it sidecar-pod -c sidecar -- /bin/sh
+kubectl logs sidecar-pod 
+kubectl logs sidecar-pod -c sidecar
+vi web.yaml
+vi web-svc.yaml
+vi web.yaml
+vi web.yaml 
+kubectl apply -f web.yaml 
+kubectl get pods
+kubectl logs web -c svc-check
+kubectl get pods
+kubectl apply -f web-svc.yaml 
+kubectl get svc
+kubectl delete -f web-svc.yaml 
+kubectl delete -f web.yaml 
+vi web.yaml
+kubectl apply -f web.yaml 
+kubectl apply -f web-svc.yaml 
+kubectl logs svc-ok
+kubectl logs svc-check
+vi web.yaml
+kubectl logs nginx
+vi init-container-demo.yaml
+kubectl apply -f init-container-demo.yaml
+kubectl get pods
+kubectl get pods -o wide
+kubectl exec -it init-container-demo == sh
+kubectl exec -it init-container-demo -- sh
+ls -la /etc/kubernetes/manifests/
+kubectl get pods
+kubectl get pods -o wide
+kubectl delete pod my-static-pod-worker01 
+kubectl get pods -o wide
+kubectl edit pod my-static-pod-worker01 
+kubectl describe pod my-static-pod-worker01
+kubectl get pods -o wide
+kubectl describe pod my-static-pod-worker01
+kubectl get pods -o wide
+kubectl describe pod my-static-pod-worker01
+vi my-static-pod.yaml
+kubectl get pods -o wide
+vi web-svc.yaml 
+kubectl get svc
+vi web-svc.yaml 
+vi user-web.yaml
+vi user-web-svc.yaml\
+vi user-web-svc.yaml
+kubectl apply -f user-web.yaml 
+kubectl apply -f user-web-svc.yaml 
+kubectl get pods
+kubectl get svc
+vi user-web.yaml
+vi user-web-svc.yaml
+kubectl apply -f user-web-svc.yaml 
+kubectl get svc
+mv user-web-svc.yaml user-web-svc-clusterIP.yaml 
+cp -rp user-web-svc-clusterIP.yaml user-web-svc-NodePort.yaml
+vi user-web-svc-NodePort.yaml
+kubectl apply -f user-web-svc-NodePort.yaml
+kubectl get svc
+vi user-web-svc-NodePort.yaml
+kubectl apply -f user-web-svc-NodePort.yaml
+vi user-web-svc-NodePort.yaml
+kubectl apply -f user-web-svc-NodePort.yaml
+kubectl get svc
+cp -rp user-web-svc-NodePort.yaml user-web-svc-LoadBalancer.yaml
+vi user-web-svc-LoadBalancer.yaml
+kubectl apply -f user-web-svc-LoadBalancer.yaml
+kubectl get svc
+vi user-web-svc-LoadBalancer.yaml
+kubectl apply -f user-web-svc-LoadBalancer.yaml
+kubectl get svc
+vi user-web-svc-LoadBalancer.yaml
+kubectl get endpoints
+kubectl get svc
+vi deploy.yaml
+kubectl apply -f deploy.yaml
+vi deploy.yaml
+vi user-web-svc-LoadBalancer.yaml 
+vi deploy.yaml
+kubectl apply -f deploy.yaml
+kubectl delete -f deploy.yaml
+kubectl apply -f deploy.yaml
+kubectl get endpoints
+kubectl delete pod user-web 
+kubectl get endpoints
+kubectl get svc
+history
+cd ..
+history| awk '$1 > 130' | cut -c 8- > day2-history.txt 

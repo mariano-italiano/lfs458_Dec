@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  initContainers:
+  - name: svc-check
+    image: radial/busyboxplus:curl
+    command: [ 'sh', '-c', 'until nslookup web-svc; do echo waiting for web-svc to start; sleep 2; done']
+  - name: svc-ok
+    image: busybox
+    command:
+    - 'sh'
+    - '-c'
+    - 'echo web-svc is up and running; sleep 10'
+  containers:
+  - name: nginx
+    image: nginx
