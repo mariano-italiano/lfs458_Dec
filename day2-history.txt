@@ -1,0 +1,184 @@
+kubectl get nodes
+vi .kube/config 
+echo "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURJVENDQWdtZ0F3SUJBZ0lJRFpsbkRsVmJKWHN3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TXpFeU1URXhNak01TkRKYUZ3MHlOREV5TVRBeE1qTTVORFJhTURReApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1Sa3dGd1lEVlFRREV4QnJkV0psY201bGRHVnpMV0ZrCmJXbHVNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXdiOUVwQytnelpQa2NFQUsKcU5TV0g3a1BMbVBFTWgvaVoxamw3RFFGT09kUmJmNTY3L3c2M1RiN2xzRk5xSmxBWGtaTFgvWmkwWExiUExySgpYWjhETHJqUkFOL3dkakFtK3pQalM1dnFFN245SmhjZjA2NDltYnZXeXRISGtLb2psMVJhVUVzS2lRL1l3aDY4CnRIR0paVWVlMmdwZ1JZdEE0Z0VEUkdSTlllNTJkOTM5U0RJc09LbHZjbFg4ZHFQdWpWdUsweW0rR0MzTWVNUE4KOFZMNWZHbXh1cUZwU2R4STcvTFZidG5sZEl3NEcvZnJkUnMyazJEQktxbERlMGdINURZWkg4WjB2dnJodHlwdApPRDRCTGNmL2c1bFdrSGxVMW81UDZaYUtPQW0xTEVYRzlydm1UODdnZEc0dTdTODRqQWNtdmdiRHRHZXRyRFJrClZyNVlMUUlEQVFBQm8xWXdWREFPQmdOVkhROEJBZjhFQkFNQ0JhQXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUgKQXdJd0RBWURWUjBUQVFIL0JBSXdBREFmQmdOVkhTTUVHREFXZ0JUc00yMmJaTjVFLzc1N2swb0gzU2dhNjllWApPekFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBUTRFeEh4d3ZIaWJnMkNnN3hJZ3pweFc0TVEyNkJTSkhkdkh0CmdtUlFyV2FTdlMwRWJtVWZ2cSs2d2M3K213YVRZV21vYWc3SEZNdFFJdmVVQjZsMXRkQ2hGV3dCODU5VlF3NFAKSjBSRzhIdXFuYzYwaGNuQk1pemhpeGw2VVgvNFBEc1Z2VmRzaEs5a3pFcDNJdFpKT2VrZkxNZEpZSlVQb0JhZwpPeG9UVFNLS1VQRG9Lc29jcTZIMElYWTdEeVFicjF2TVU5K3RtQ2pPKy9EUGhoWnBMSG9FNllya3RWbzQ1OUZpCnBER3Q0UkxWbVdiRFkvRlNDVHBrclhqWnpkWWpNMWJtVzFqMDc0dndDTTVpWlo0dVVvK3I1SmVuM1F2K01ZL1oKZWs5Ym43dHRBNFM5MEwwcGFCOGxmKytMTGlrS3k4cytaOVN1aHBJaFJXdXZwT1VIVlE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==" | base64 -d
+vi .kube/config 
+kubectl get pods -A
+cat .kube/config 
+export client=$(grep client-cert .kube/config | cut -d " " -f 6)
+echo $client 
+export key=$(grep client-key .kube/config | cut -d " " -f 6)
+export auth=$(grep certificate-authority .kube/config | cut -d " " -f 6)
+echo $client | base64 -d > client.pem
+echo $key | base64 -d > client-key.pem
+echo $auth | base64 -d > ca.pem
+ls -la *pem
+curl --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes
+curl --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[].metadata.name'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[].metadata.name'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node name: \(.metadata.name), IP Address: \(.status.addresses.address)"'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node name: \(.metadata.name), IP Address: \(.status.addresses[].address)"'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node name: \(.metadata.name), IP Address: \(.status.addresses[0].address)"'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node name: \(.metadata.name), IP Address: \(.status.addresses[0].address), Taints: \(.spec.taints)"'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node name: \(.metadata.name), IP Address: \(.status.addresses[0].address), Taints: \(.spec.taints[0])"'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/namespaces
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/namespaces | jq -r '.metadaata.name'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/namespaces | jq -r '.items[].metadaata.name'
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/namespaces | jq -r '.items[].metadata.name'
+kubectl get ns
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/pods
+curl -s --cert client.pem --key client-key.pem --cacert ca.pem https://192.168.1.100:6443/api/v1/namespaces/kube-system/pods/etcd-k8s-master
+curl -s  https://192.168.1.100:6443/api/v1/namespaces/kube-system/pods/etcd-k8s-master
+curl https://192.168.1.100:6443/api/v1/namespaces/kube-system/pods/etcd-k8s-master
+ls -la
+cd lfs458_Dec/
+mkdir day2
+mv ../pod.yaml day2/
+cd day2/
+ls -la
+vi pod.yaml 
+mv pod.yaml  my-pod.yaml
+vi my-pod.yaml 
+kubectl apply -f my-pod.yaml
+kubectl apply -f my-pod.yaml -n lfs458 
+kubectl get pods
+kubectl get pods -n lfs458 
+kubectl get pods -n lfs458 -o wide
+kubectl get pods 0o wide
+kubectl get pods -o wide
+kubectl run my-pod2 -n default --image=busybox
+kubectl get pods -o wide
+vi my-pod.yaml 
+kubectl run my-pod2 -n default --image=busybox --dry-run -o yaml
+kubectl run my-pod2 -n default --image=busybox --dry-run -o yaml > my-pod2.yaml
+kubectl run my-pod2 -n default --image=busybox --dry-run=client -o yaml > my-pod2.yaml
+vi my-pod2.yaml
+kubectl run my-pod2 -n default --image=busybox --dry-run=client -o json
+kubectl describe pod my-pod
+kubectl annotate pods my-pod description='test first pod for Marcin'
+kubectl describe pod my-pod
+kubectl annotate pods my-pod envType='dev'
+kubectl describe pod my-pod
+kubectl annotate pods my-pod description='Test App1 instance'
+kubectl annotate pods my-pod description='Test App1 instance' --overwrite
+kubectl describe pod my-pod
+kubectl annotate pods my-pod description-
+kubectl descr
+vi my-pod
+vi my-pod.yaml 
+kubectl edit pod my-pod2 
+kubectl get pods -l app=test-pod
+kubectl get pods -l app=test-pod -o jsonpath='{.items[0].metadata.name}'
+kubectl get pods -l app=test-pod -o jsonpath='{.items[].metadata.name}'
+kubectl get pods -l app=test-pod
+kubectl get pods -l app=test-pod -o jsonpath='{.items[].metadata.name}'
+kubectl annotate pods $(kubectl get pods -l app=test-pod -o jsonpath='{.items[0].metadata.name}') version.stable=1.0
+kubectl describe pod my-pod
+kubectl get pods -l app=test-pod -o jsonpath='{.items[].metadata.name}'
+kubectl get pods my-pod -o jsonpath='{.metadata.annotations}'
+kubectl get pods my-pod -o jsonpath='{.metadata.annotations}' | python3 -m json.tool
+kubectl get pods
+kubectl delete pods my-pod
+kubectl delete pods my-pod2
+kubectl get pods
+kubectl delete -f my-pod.yaml -n lfs458 
+kubeca
+kubectl apply -f my-pod.yaml 
+cp -rp my-pod.yaml second-pod.yaml
+vi second-pod.yaml
+kubectl apply -f second-pod.yaml my-pod.yaml 
+kubectl apply -f second-pod.yaml 
+kubectl get pods
+kubectl label pods my-pod env=production
+kubectl label pods second-pod env=development
+kubectl describe secrets 
+kubectl describe pod second-pod 
+kubectl get pods --help
+kubectl get pods --selector env=production
+kubectl get pods --selector env=production,app=test-app
+kubectl get pods --selector env=production,app=test-pod
+kubectl get pods -A -l 'production in(env)'
+kubectl get pods -A -l 'env in(production)'
+kubectl get pods -A -l 'env in(prod)'
+kubectl get pods -A
+kubectl describe pod -n kube-system kube-scheduler-k8s-master
+kubectl get pods -A -l 'component in(etcd), component notin(kube-scheduler)'
+kubectl get pods -A -l 'component in(etcd), component in(kube-scheduler)'
+kubectl get pods -A -l 'component notin(etcd)'
+sudo -i
+kubectl confg view
+kubectl config view
+cat /etc/passwd
+sudo useradd devops
+sudo passwd devops
+sudo -i
+openssl genrsa -out devops.pem
+openssl req -new -key devops.pem -out devops.csr -subj "/CN=devops"
+cat devops.csr | base64 | tr -d '\n'
+vi user-request-devops.yaml
+kubectl create -f user-request-devops.yaml
+kubectl certificate 
+kubectl get csr
+kubectl certificate approve user-request-devops
+kubectl get csr
+kubectl get csr user-request-devops -o jsonpath
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}'
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}' | base64 -d > devops.crt
+cat devops.crt
+kubectl --kubeconfig config-devops config set-cluster preprod --insecure-skip-tls-verify=true --server=https://192.168.1.100:6443
+vi config-devops 
+kubectl --kubeconfig config-devops config set-credentials devops --client-certificate devops.crt --client-key devops.pem --embed-certs=true
+vi config-devops 
+kubectl --kubeconfig config-devops config set-context default --cluster=preprod --user=devops
+vi config-devops 
+vi devops-ns.yaml
+kubectl apply -f devops-ns.yaml
+kubec get ns
+kubectl get ns
+vi devops-role.yaml
+kubectl apply -f devops-role.yaml
+vi  devops-rolebinding.yaml
+kubectl get roles
+kubectl get roles -n devops-ns \
+kubectl get roles -n devops-ns 
+kubectl get roles,rolebindings -n devops-ns 
+kubectl apply -f devops-rolebinding.yaml
+kubectl get roles,rolebindings -n devops-ns 
+kubectl get pods -n devops-ns 
+kubectl apply -f my-pod.yaml -n devops-ns 
+kubectl get pods -n devops-ns 
+kubectl -n devops-ns --kubeconfig config-devops get pods
+kubectl get pods
+sudo -i
+kubectl -n devops-ns
+kubectl -n devops-ns edit role devops-role 
+sudo -i
+kubectl -n devops-ns edit role devops-role 
+sudo -i
+kubectl -n devops-ns edit role devops-role 
+sudo -i
+kubectl -n devops-ns edit role devops-role 
+sudo -i
+vi my-svc-acc.yaml
+kubectl apply -f my-svc-acc.yaml
+kubectl create serviceaccount  my-svc-acc2 
+kubectl get sa
+kubectl create clusterrolebinding api-role-binding --clusterrole=cluster-admin --serviceaccount=default:my-svc-acc
+kubectl create token my-svc-acc
+export token="eyJhbGciOiJSUzI1NiIsImtpZCI6InVTUlVISUFablF5VC1yb1NMRHhhNHhjaThfYi1YQlluUk51bzNaeG9PUFkifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzAyMzgzNDQ3LCJpYXQiOjE3MDIzNzk4NDcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0Iiwic2VydmljZWFjY291bnQiOnsibmFtZSI6Im15LXN2Yy1hY2MiLCJ1aWQiOiI4ZTUxY2M4Yy0yYzkwLTRmNTAtYWU3OS00OTFmYjQ0YzVlZWMifX0sIm5iZiI6MTcwMjM3OTg0Nywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6bXktc3ZjLWFjYyJ9.UQZXiY5q8-Zt3kBtf9pxaFvl-1JRVtDI6nBb74N5OCViiHnJKvMl0JYdOPRmOTwTeDnfPRXJoOrz_2eE9h8ZQhiaEXeEwSQlmbqNVjGMAoWHad5Sn55bjk78gZrQOYHEXLQbbpAhty2hSt6UOes8iqHL67nLMKdUDunPoE-vrhQNPPV_1F2HzT04gEMbB4Dpu01rvQN9yfvgHhLY6Rn8j6cmPNAKXaz6ph8QhrVmMNzCxVnlHLco35kbbTrsLoxTHkOVgvBHq94KYtm42vkwaPi_6juEg1m4F3TYYA8d34AyOCauhwz5KIEDbyvtqJDSDIdDkAXaN1PAYa2uUgcAtg"
+echo $token
+curl -k -H "Authorization: Bearer $token" -X GET https://k8s-master:6443/api/v1/namespaces/default/pods
+kubectl --kubeconfig config-svcacc config set-credentials my-svc-acc --token=$token
+vi config-svcacc 
+kubectl --kubeconfig config-svcacc config set-cluster test --insecure-skip-tls-verify=true --server=https://k8s-master:6443
+kubectl --kubeconfig config-svcacc config --current --user my-svc-acc
+kubectl --kubeconfig config-svcacc config --user my-svc-acc
+kubectl --kubeconfig config-svcacc config set-context --user my-svc-acc --current
+vi config-svcacc 
+kubectl --kubeconfig config-svcacc config set-context --user my-svc-acc --cluster test --current
+kubectl --kubeconfig config-svcacc config set-context --user my-svc-acc --cluster test
+kubectl --kubeconfig config-svcacc config set-context --user my-svc-acc --cluster test default
+vi config-svcacc 
+sudo -i
+vi ../day1-history.txt 
+history
+history| awk '$1 > 130' | cut -c 8- > ../day2-history.txt 
