@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3                # number of replica Pods to run
+  selector:                  # locate which Pods are beeing managed by the Deployment
+    matchLabels:             # choose pods based on matching labels
+      app: my-deployment
+  template:
+    metadata:
+      labels:
+        app: my-deployment   # allow Deployment manage the Pods created with that label
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.19.1
+        ports:
+        - containerPort: 80  # expose port 80

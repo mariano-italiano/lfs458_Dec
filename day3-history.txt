@@ -1,0 +1,178 @@
+kubectl get nodes
+kubectl get svc
+kubectl get pods -n kube-system 
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods -n kube-system -o wide
+kubectl get svc
+kubectl get pods
+kubectl describe pod web
+kubectl describe svc web-svc 
+kubectl exec -it web -- nslookup 10.102.78.240
+cd lfs458_Dec/
+mkdir day3
+cd day3
+vi test-dns.yaml
+vi test-dns-svc.yaml
+kubectl apply -f test-dns.yaml 
+kubectl apply -f test-dns-svc.yaml
+kubectl exec -it test-dns -- nslookup 10.102.78.240
+kubectl exec -it test-dns -- nslookup web-svc.default.svc.cluster.local
+kubectl delete -f test-dns.yaml 
+kubectl get ns
+kubectl apply -f test-dns-svc.yaml -n lfs458 
+kubectl exec -it test-dns -- nslookup 10.102.78.240
+kubectl exec -it test-dns -n lfs458 -- nslookup 10.102.78.240
+kubectl apply -f test-dns.yaml -n lfs458 
+kubectl exec -it test-dns -n lfs458 -- nslookup 10.102.78.240
+kubectl get svc
+kubectl get svc -o wide
+kubectl get svc -n lfs458 
+kubectl get po -n lfs458 
+kubectl exec -it test-dns -n lfs458 -- nslookup web-svc
+kubectl exec -it test-dns -n lfs458 -- nslookup web-svc.default.svc.cluster.local
+kubectl exec -it test-dns -- nslookup web-svc
+kubectl apply -f test-dns.yaml 
+kubectl exec -it test-dns -- nslookup web-svc
+kubectl get pods
+kubectl get svc
+kubectl exec -it test-dns -- nslookup web-svc
+kubectl exec -it test-dns -- nslookup web-svc.default.svc.cluster.local
+kubectl exec -it test-dns -n lfs458 -- nslookup web-svc
+kubectl exec -it test-dns -n lfs458 -- nslookup web-svc.default.svc.cluster.local
+kubectl delete deployments.apps nginx-deployment 
+kubectl delete pod second-pod 
+kubectl delete pod my-pod 
+kubectl delete pod sidecar-pod 
+kubectl get po
+kubectl delete pod init-container-demo 
+kubectl get pods
+kubectl delete pod test-dns 
+vi busybox-dnstest.yaml
+kubectl apply -f busybox-dnstest.yaml
+kubectl get pods
+kubectl exec -it busybox-dnstest -- sh
+kubectl get pods -o wide
+kubectl exec -it busybox-dnstest -- sh
+kubectl get pods -n lfs458 -o wide
+kubectl exec -it busybox-dnstest -- sh
+kubectl delete pod -n lfs458 -f test-dns.yaml 
+kubectl delete  -n lfs458 -f test-dns.yaml 
+ls
+vi nginx-dnstest.yaml
+kubectl apply -f nginx-dnstest.yaml -n lfs458 
+kubectl get pods -n lfs458 -o wide
+kubectl exec -it busybox-dnstest -- sh
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods -n lfs458 
+kubectl get pods -n lfs458 -o wide
+kubectl exec -it busybox-dnstest -- sh
+kubectl delete all -A
+kubectl delete all --all
+kubectl get svc,pod
+vi replica-set.yaml
+kubectl get pods
+kubectl apply -f replica-set.yaml
+kubectl get pods
+vi replica-set.yaml
+kubectl get pods
+kubectl get pods -o wide
+kubectl get replicasets.apps 
+kubectl get rs
+kubectl scale rs my-replicaset --replicas 5
+kubectl get rs
+kubectl get pods
+kubectl scale rs my-replicaset --replicas 3
+kubectl get pods
+kubectl get rs
+kubectl delete pod my-replicaset-wpf86 ; kubectl get pods,rs
+kubectl delete rs my-replicaset 
+kubectl get rs
+kubectl get pod
+vi my-deployment.yaml
+kubectl apply -f my-deployment.yaml
+kubectl get deploy,pods
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 10
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 0
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 3
+kubectl get deploy,pods,rs
+kubectl edit deployments.apps my-deployment 
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 9
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 8
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 3
+kubectl get deploy,pods,rs
+kubectl delete pod my-deployment-678d6cbc6-wc9dp 
+kubectl get deploy,pods,rs
+kubectl scale deployment my-deployment --replicas 5 --record
+kubectl describe deployments.apps my-deployment 
+kubectl scale deployment my-deployment --replicas 4
+kubectl annotate deployments.apps my-deployment kubernetes.io/change-cause="Update aplikacji1 z replik 5 do 4"
+kubectl describe deployments.apps my-deployment 
+kubectl annotate deployments.apps my-deployment changelog/13122023="Update aplikacji1 z replik 5 do 4"
+kubectl annotate deployments.apps my-deployment changelog/12122023="Aktualizacja patch 5.4"
+kubectl describe deployments.apps my-deployment 
+kubectl edit deployments.apps my-deployment 
+kubectl describe deployments.apps my-deployment 
+kubectl edit deployments.apps my-deployment 
+kubectl describe deployments.apps my-deployment 
+kubectl edit deployments.apps my-deployment 
+kubectl annotate deployments.apps my-deployment changelog/12122023="Aktualizacja patch 5.4"
+kubectl edit deployments.apps my-deployment 
+kubectl rollout status deployment my-deployment 
+kubectl edit deployments.apps my-deployment 
+kubectl rollout status deployment my-deployment 
+kubectl get pods,deploy
+kubectl rollout history deployment my-deployment 
+kubectl edit deployments.apps my-deployment 
+kubectl annotate deployments.apps my-deployment changelog/14122023="Aktualizacja do nginx 1.19.2"
+kubectl rollout history deployment my-deployment 
+kubectl annotate deployments.apps my-deployment kubernetes.io/change-cause="Aktualizacja do nginx 1.19.2"
+kubectl rollout history deployment my-deployment 
+kubectl set image deployment my-deployment nginx=nginx:broken --record
+kubectl rollout status deployment my-deployment 
+kubectl get pods,deploy
+kubectl rollout history deployment my-deployment 
+kubectl rollout undo deployment my-deployment --to-revision 2 --record
+kubectl rollout undo deployment my-deployment --to-revision 2 --recor
+kubectl rollout undo deployment my-deployment --to-revision 2 
+kubectl get pods,deploy
+kubectl rollout history deployment my-deployment 
+kubectl set image deployment my-deployment nginx=nginx:1.19.4 --record
+kubectl rollout history deployment my-deployment 
+kubectl get pods,deploy
+kubectl annotate deployments.apps my-deployment kubernetes.io/change-cause="Aktualizacja do nginx 1.19.4"
+kubectl rollout history deployment my-deployment 
+kubectl rollout undo deployment my-deployment --to-revision 4
+kubectl rollout history deployment my-deployment 
+kubectl get pods,deploy
+vi my-daemonset.yaml
+kubectl apply -f my-daemonset.yaml
+kubectl get ds,pod,rs
+kubectl get ds,pod
+kubectl get ds,pod -o wide
+vi my-statefulset.yaml
+kubectl apply -f my-statefulset.yaml
+kubectl get statefulsets
+kubectl get sts,pod
+kubectl edit sts my-statefulset 
+kubectl get sts,pod
+kubectl scale statefulset my-statefulset --replicas 4
+watch -n1 kubectl get sts,pod
+kubectl scale statefulset my-statefulset --replicas 3
+watch -n1 kubectl get sts,pod
+kubectl scale statefulset my-statefulset --replicas 6
+watch -n1 kubectl get sts,pod
+kubectl delete sts my-statefulset 
+kubectl delete deployments.apps my-deployment 
+kubectl delete ds my-daemonset 
+watch -n1 kubectl get sts,pod
+history
+cd ..
+history| awk '$1 > 433' | cut -c 8- > day3-history.txt

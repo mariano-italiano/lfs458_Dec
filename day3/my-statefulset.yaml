@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+  labels:
+    app: stfs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stfs
+  template:
+    metadata:
+      name: stfs
+      labels:
+        app: stfs
+    spec:
+      containers:
+      - name: stfs-container
+        image: nginx
+        ports:
+          - containerPort: 80
+        env:
+          - name: TEST
+            value: TEST_VALUE
