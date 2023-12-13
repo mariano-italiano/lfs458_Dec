@@ -176,3 +176,197 @@ watch -n1 kubectl get sts,pod
 history
 cd ..
 history| awk '$1 > 433' | cut -c 8- > day3-history.txt
+git status
+git add .
+git status
+git commit -m "Adding day3 files"
+git push
+cd day3
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml
+kubectl get pods -n ingress-nginx
+kubectl get svc -n ingress-nginx
+kubectl describe ingressclasses.networking.k8s.io -n ingress-nginx nginx
+kubectl -n ingress-nginx annotate ingressclasses nginx ingressclass.kubernetes.io/is-default-class="true"
+kubectl describe ingressclasses.networking.k8s.io -n ingress-nginx nginx
+kubectl get pods -n ingress-nginx
+vi app1-ingress.yaml
+kubectl apply -f app1-ingress.yaml
+kubectl get all -n app1
+kubectl get all -n app1 -o wide
+curl http://192.168.1.110:30519 -H 'Host: app1.example.com'
+vi app1-ingress.yaml 
+kubectl edit service ingress-nginx-controller -n ingress-nginx 
+kubectl get svc ingress-nginx-controller -n ingress-nginx
+kubectl get pod -n ingress-nginx
+kubectl edit deployments.apps -n app1 app1 
+curl http://192.168.1.100 -H 'Host: app1.example.com'
+kubectl -n app1 edit ingress app1-ingress 
+curl http://192.168.1.100 -H 'Host: app1.192.168.1.100.nip.io;
+curl http://192.168.1.100 -H 'Host: app1.192.168.1.100.nip.io'
+kubectl -n app1 edit ingress app1-ingress 
+vi volume-pod.yaml
+kubectl apply -f volume-pod.yaml
+kubectl get pods
+kubectl exec -it volume-pod -- bash
+kubectl get pods -o wide
+kubectl exec -it volume-pod -- bash
+kubectl delete pod volume-pod 
+kubectl apply -f volume-pod.yaml
+kubectl get pods
+kubectl exec -it volume-pod -- bash
+kubectl get pods
+kubectl get deploy
+kubectl get pv,pvc
+vi test-pv.yaml
+vi test-pvc.yaml
+kubectl apply -f test-pv.yaml 
+kubectl get pv
+kubectl apply -f test-pvc.yaml 
+kubectl get pv,pvc
+kubectl delete pvc test-pvc 
+kubectl get pv,pvc
+kubectl apply -f test-pvc.yaml 
+kubectl get pv,pvc
+kubectl get pv test-pv -o json | jq .spec.claimRef
+kubectl patch pv test-pv -p '{"spec":{"claimRef": null}}'
+kubectl get pv test-pv -o json | jq .spec.claimRef
+kubectl get pv,pvc
+vi test-volume-nginx.yaml
+vi test-pv.yaml 
+kubectl apply -f test-volume-nginx.yaml
+kubectl get pods,deploy
+kubectl get pods,deploy -o wide
+vi test-volume-svc.yaml
+kubectl apply -f test-volume-svc.yaml
+kubectl get svc
+vi test-volume-svc.yaml
+vi test-volume-nginx.yaml
+vi delete-pv.yaml
+vi delete-pvc.yaml 
+kubectl apply -f delete-pv.yaml 
+kubectl get pv
+kubectl apply -f delete-pvc.yaml 
+kubectl get pv
+kubectl get pv,pvc
+kubectl delete pvc delete-pvc 
+kubectl get pv,pvc
+kubectl get sc
+kubectl get storageclasses
+vi bronze-sc.yaml
+mv bronze-sc.yaml bronze-pv.yaml 
+vi bronze-sc.yaml
+kubectl apply -f bronze-sc.yaml
+kubectl get sc
+vi bronze-pv.yaml
+vi bronze-pvc.yaml
+kubectl apply -f bronze-pv.
+kubectl apply -f bronze-pv.yaml 
+kubectl get pv,pvc,sc
+kubectl apply -f bronze-pvc.yaml 
+kubectl get pv,pvc
+vi bronze-pod.yaml
+kubectl apply -f bronze-pod.yaml
+kubectl get pods -o wide
+sudo apt install nfs-common nfs-kernel-server cifs-utils -y
+mkdir /var/nfs/01 -p
+sudo mkdir /var/nfs/01 -p
+sudo mkdir /var/nfs/02 -p
+sudo chown -R nobody:nogroup /var/nfs/
+vi /etc/exports 
+sud ovi /etc/exports 
+sudo vi /etc/exports 
+sudo exportfs -rav
+sudo systemctl restart nfs-kernel-server
+cp -rp bronze-sc.yaml nfs-class.yaml
+vi nfs-class.yaml
+kubectl apply -f nfs-class.yaml
+kubectl get sc
+vi nfs-pv.yaml
+kubectl apply -f nfs-pv.yaml
+kubectl get pv
+cp nfs-pv.yaml nfs-pvc.yaml
+vi nfs-pvc.yaml
+kubectl apply -f nfs-pvc.yaml
+kubectl get pv,pvc
+ls -la
+cp -rp bronze-pod.yaml nfs-pod.yaml
+vi nfs-pod.yaml
+kubectl apply -f nfs-pod.yaml
+kubectl exec -it nfs-pod -- bash
+kubectl exec -it nfs-pod -- sh
+ls -la /var/nfs/01/
+kubectl delete pod nfs-pod 
+kubectl get pv.pvc
+kubectl get pv,pvc
+kubectl delete pvc nfs-pvc 
+kubectl get pv,pvc
+kubectl events 
+kubectl delete pv nfs-pv 
+kubectl get pv,pvc
+echo student123|base64
+vi my-secret.yaml
+kubectl create secret generic my-secret --from-literal=db_pass=student123! --from-literal root=student -o yaml --dry-run
+echo student123! | base64
+echo "student123!" | base64
+kubectl create secret generic my-secret --from-literal=db_pass=student123! --from-literal root=student -o yaml --dry-run > my-secret.yaml
+vi my-secret.yaml
+kubectl apply -f my-secret.yaml
+kubectl describe secrets my-secret 
+vi mariadb-root.txt
+kubectl create secret generic mariadb-pass --from-file mariadb-root.txt 
+kubectl describe secrets mariadb-pass 
+mv mariadb-root.txt mariadb-root
+kubectl create secret generic mariadb-pass --from-file mariadb-root
+kubectl delete secrets mariadb-pass 
+kubectl create secret generic mariadb-pass --from-file mariadb-root
+kubectl describe secrets mariadb-pass 
+vi secret-pod.yaml
+kubectl apply -f secret-pod.yaml
+kubectl exec -it secret-pod -- bash
+kubectl exec -it secret-pod -- bashsh
+kubectl exec -it secret-pod -- sh
+vi secret-pod.yaml
+kubectl apply -f secret-pod.yaml
+kubectl delete -f secret-pod.yaml
+kubectl apply -f secret-pod.yaml
+kubectl exec -it secret-pod -- sh
+vi my-configmap.yaml
+kubectl apply -f my-configmap.yaml
+kubectl describe configmaps my-configmap 
+vi env-file-example
+kubectl create configmap fromenvfile --from-env-file env-file-example 
+kubectl describe configmaps fromenvfile 
+vi service.json
+kubectl create configmap configuration --from-file service.json 
+kubectl describe configmaps configuration 
+vi configmap-pod.yaml
+kubectl apply -f configmap-pod.yaml
+kubectl exec -it configmap-pod -- sh
+kubectl edit pod configmap-pod 
+vi configmap-pod.yaml 
+kubectl delete pod configmap-pod 
+kubectl apply -f configmap-pod.yaml
+kubectl exec -it configmap-pod -- sh
+kubectl edit configmaps configuration 
+kubectl exec -it configmap-pod -- sh
+vi nginx-config.yaml
+htpasswd -c .htpasswd test
+sudo apt install apache2-utils -y
+htpasswd -c .htpasswd test
+ls -la
+kubectl create secret generic nginx-htpasswd --from-file .htpasswd 
+rm .htpasswd 
+vi nginx-pod.yaml
+kubectl apply -f nginx-pod.yaml
+kubectl get pods -o wide
+kubectl events 
+kubectl apply -f nginx-config.yaml 
+kubectl get pods -o wide
+kubectl events 
+kubectl delete -f nginx-pod.yaml 
+kubectl get secrets 
+kubectl get cm
+kubectl apply -f nginx-pod.yaml 
+kubectl get pods -o wide
+kubectl exec -it nginx-pod -- sh
+cd .. ; history| awk '$1 > 433' | cut -c 8- > day3-history.txt

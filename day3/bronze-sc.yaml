@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: brozne-sc
+provisioner: kubernetes.io/hostpath
+reclaimPolicy: Retain
+allowVolumeExpansion: true
