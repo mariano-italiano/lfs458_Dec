@@ -1,0 +1,221 @@
+kubectl get nodes
+kubectl get all -A
+kubectl get nodes --show-labels 
+cd lfs458_Dec/
+mkdir day4
+cd day4
+kubectl get pod 
+vi web-pod.yaml
+kubectl apply -f web-pod.yaml
+vi web-pod.yaml
+kubectl apply -f web-pod.yaml
+kubectl get pods
+kubectl label nodes worker02 web-services=true
+kubectl get pods -o wide
+vi ../day3/my-deployment.yaml
+vi web-pod.yaml
+vi busybox-deployment.yaml
+kubectl apply -f busybox-deployment.yaml
+kubectl get pods
+vi busybox-deployment.yaml
+kubectl label nodes worker01 service=busy-app
+kubectl get pods -o wide
+kubectl label nodes worker01 service-
+kubectl get pods -o wide
+kubectl delete deployments.apps busybox-deployment 
+vi busybox-deployment.yaml
+kubectl apply -f busybox-deployment.yaml
+kubectl get pods -o wide
+kubectl get nodes -o jsonpath '{.spec.taints}'
+kubectl get nodes -o json
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl taint nodes worker02 key1=value1:NoSchedule
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+vi noschedule-pod1.yaml
+cp -rp noschedule-pod1.yaml noschedule-pod2.yaml
+kubectl apply -f noschedule-pod1.yaml 
+kubectl apply -f noschedule-pod2.yaml 
+vi noschedule-pod2.yaml
+kubectl get pods -l topic=taints
+kubectl apply -f noschedule-pod1.yaml 
+kubectl apply -f noschedule-pod2.yaml 
+kubectl get pods -l topic=taints
+kubectl get pods -l topic=taints -o wide
+cp -rp noschedule-pod2.yaml noschedule-pod3.yaml
+vi noschedule-pod3.yaml
+kubectl apply -f noschedule-pod3.yaml
+vi noschedule-pod3.yaml
+kubectl apply -f noschedule-pod3.yaml
+kubectl get pods -l topic=taints -o wide
+kubectl taint node worker02 key1=value1:NoSchedule-
+kubectl delete pod -l topic=taints 
+kubectl apply -f noschedule-pod3.yaml
+kubectl apply -f noschedule-pod1.yaml
+kubectl apply -f noschedule-pod2.yaml
+kubectl get pods -l topic=taints -o wide
+kubectl delete pod -l topic=taints 
+kubectl apply -f noschedule-pod1.yaml
+kubectl taint node worker02 key1=value1:NoSchedule
+kubectl taint node worker02 key2=value2:NoSchedule
+kubectl taint node worker02 key1=value1:NoExecute
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[])"'
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints)"'
+kubectl get pods -l topic=taints
+kubectl apply -f noschedule-pod1.yaml 
+kubectl get pods -l topic=taints
+kubectl get pods -l topic=taints -o wide
+kubectl delete -f noschedule-pod1.yaml 
+kubectl taint node worker02 key2=value2:NoSchedule-
+kubectl taint node worker02 key1=value1:NoExecute-
+kubectl apply -f noschedule-pod1.yaml 
+kubectl get pods -l topic=taints
+kubectl get pods -l topic=taints -o wide
+kubectl taint node worker02 key2=value2:NoSchedule
+kubectl taint node worker02 key1=value1:NoExecute
+kubectl get pods -l topic=taints -o wide
+kubectl events
+kubectl taint node worker02 key2=value2:NoSchedule-
+kubectl taint node worker02 key1=value1:NoExecute-
+kubectl get pods -l topic=taints -o wide
+kubectl apply -f noschedule-pod1.yaml 
+vi noschedule-pod1.yaml 
+kubectl apply -f noschedule-pod1.yaml 
+kubectl get pods -l topic=taints -o wide
+kubectl describe pod noschedule-pod1 
+kubectl get pods -l topic=taints -o wide
+kubectl taint node worker02 key1=value1:NoExecute
+kubectl get pods -l topic=taints -o wide
+kubectl events
+vi with-affinity-pod.yaml
+kubectl taint node worker02 key1=value1:NoExecute-
+kubectl taint node worker02 key1=value1:NoSchedule-
+kubectl taint node worker02 key2=value2:NoSchedule-
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints)"'
+kubectl get nodes --show-labels
+kubectl label nodes worker01 country=poland
+kubectl label nodes worker02 country=france
+kubectl label nodes worker01 env=production
+kubectl apply -f with-affinity-pod.yaml 
+kubectl get pods
+kubectl get pods -o wide
+kubectl label nodes worker01 env=production-
+kubectl label nodes worker01 env-
+kubectl label nodes worker02 env=production
+kubectl get pods -o wide
+kubectl delete -f w
+kubectl delete -f with-affinity-pod.yaml 
+kubectl apply -f with-affinity-pod.yaml 
+kubectl get pods -o wide
+kubectl delete -f with-affinity-pod.yaml 
+kubectl label nodes worker01 country-
+kubectl label nodes worker02 country-
+kubectl apply -f with-affinity-pod.yaml 
+kubectl get pods -o wide
+kubectl create ns np-test
+kubectl label namespaces np-test team=dev
+vi np-nginx.yaml
+vi np-busybox.yaml
+kubectl apply -f np-nginx.yaml 
+kubectl apply -f np-busybox.yaml 
+kubectl get all -n np-test
+kubectl get all -n np-test -o wide
+kubectl -n np-test exec -it np-busybox -- curl 10.0.2.27
+vi my-networkpolicy.yaml
+kubectl apply -f my-networkpolicy.yaml
+kubectl -n np-test exec -it np-busybox -- curl 10.0.2.27
+vi my-networkpolicy.yaml
+kubectl apply -f my-networkpolicy.yaml
+vi my-networkpolicy.yaml
+kubectl -n np-test describe networkpolicies.networking.k8s.io my-networkpolicy 
+kubectl -n np-test exec -it np-busybox -- curl 10.0.2.27
+kubectl get all -n np-test -o wide
+kubectl -n np-test exec -it -- sh
+kubectl -n np-test exec -it np-nginx -- sh
+kubectl get pods -o wide
+kubectl -n np-test exec -it np-busybox -- bash
+kubectl -n np-test exec -it np-busybox -- sh
+cp -rp my-networkpolicy.yaml my-networkpolicy2.yaml 
+vi my-networkpolicy2.yaml
+vi noschedule-pod1.yaml 
+vi my-networkpolicy2.yaml
+kubectl apply -f my-networkpolicy2.yaml
+vi my-networkpolicy2.yaml
+kubectl apply -f my-networkpolicy1.yaml
+kubectl apply -f my-networkpolicy.yaml
+kubectl apply -f my-networkpolicy2.yaml
+kubectl get networkpolicies.networking.k8s.io -n np-test
+kubectl describe -n np-test networkpolicies.networking.k8s.io my-networkpolicy
+kubectl describe -n np-test networkpolicies.networking.k8s.io my-networkpolicy2
+kubectl -n np-test exec -it np-busybox -- bash
+kubectl -n np-test exec -it np-busybox -- sh
+vi my-networkpolicy2.yaml
+kubectl label namespaces default ns-default=true
+kubectl -n np-test exec -it np-busybox -- sh
+kubectl describe pod noschedule-pod1 
+kubectl exec -it noschedule-pod1 -- curl localhost
+kubectl exec -it noschedule-pod1 -- curl 10.0.2.250
+kubectl events
+vi my-networkpolicy2.yaml
+kubectl -n np-test exec -it np-busybox -- sh
+kubectl apply -f my-networkpolicy2.yaml
+kubectl describe -n np-test networkpolicies.networking.k8s.io my-networkpolicy2
+kubectl -n np-test exec -it np-busybox -- sh
+kubectl get pods
+vi with-affinity-pod.yaml 
+vi noschedule-pod2.yaml 
+kubectl apply -f noschedule-pod2.yaml
+kubectl get pods
+kubectl get pods -o wide
+vi noschedule-pod2.yaml 
+kubectl -n np-test exec -it np-busybox -- sh
+kubectl edit pod noschedule-pod2 
+kubectl -n np-test exec -it np-busybox -- sh
+kubectl delete pod noschedule-pod2
+kubectl apply -f noschedule-pod2.yaml
+kubectl -n np-test exec -it np-busybox -- sh
+kubectl get pods -o wide
+kubectl -n np-test exec -it np-busybox -- sh2
+vi my-networkpolicy
+vi my-networkpolicy2.yaml 
+sudo iptables-save > iptables.txt
+less iptables.txt
+kubectl top
+kubectl top node
+kubectl top node --help
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+vi components.yaml 
+kubectl apply -f components.yaml 
+kubectl get pods -n kube-system 
+kubectl top nodes
+kubectl get all -A
+kubectl top nodes
+kubectl top 
+kubectl top pod
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+kubectl -n kubernetes-dashboard get pods
+kubectl -n kubernetes-dashboard get deployments.apps 
+vi admin-user.yaml
+kubectl apply -f admin-user.yaml
+kubectl get clusterrole
+kubectl describe clusterrole cluster-admin 
+kubectl describe clusterrole cluster-admin -o yaml
+kubectl get clusterrole cluster-admin -o yaml
+vi admin-user-binding.yaml
+kubectl apply -f admin-user-binding.yaml
+kubectl describe clusterrolebindings.rbac.authorization.k8s.io admin-user-binding 
+kubectl -n kubernetes-dashboard create token admin-user
+kubectl get svc -n kubernetes-dashboard 
+vi admin-user-binding.yaml
+vi crd-dbconnections.yaml
+kubectl apply -f  crd-dbconnections.yaml
+kubectl get dbcon
+kubectl get dbconn
+vi crd-postgress-config.yaml
+kubectl apply -f crd-postgress-config.yaml
+kubectl get dbconn
+kubectl describe dbconnections.lab.local postgres-database 
+vi ../day3-history.txt 
+history
+cd ..
+history| awk '$1 > 813' | cut -c 8- > day4-history.txt

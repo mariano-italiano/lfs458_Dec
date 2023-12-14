@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-affinity-pod
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: country
+            operator: In
+            values:
+              - poland
+              - france
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+            - key: env
+              operator: In
+              values:
+                - production
+  containers:
+    - name: with-affinity-pod
+      image: registry.k8s.io/pause:2.0
+

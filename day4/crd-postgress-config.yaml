@@ -1,0 +1,11 @@
+apiVersion: lab.local/v1
+kind: DbConnection
+metadata:
+  name: postgres-database
+spec:
+  dbType: postgres
+  defaultSchema: test-database
+  capacityGb: 100
+  configMapRef: postgres-configmap
+  rootUser: root
+  rootPassword: S3cureP@ss!
