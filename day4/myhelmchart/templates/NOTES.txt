@@ -1,0 +1,10 @@
+1. Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "myhelmchart.fullname" . }})
+  
+
+2. Access MY HELM CHART by navigating to following URL:
+  echo http://192.168.1.100:$NODE_PORT
+
+
+
+Any concern - please call me: 123456789

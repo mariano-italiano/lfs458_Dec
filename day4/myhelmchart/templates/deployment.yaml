@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myhelm-web
+  labels:
+    app: {{ .Values.service.label }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.service.label }} 
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.label }}
+    spec:
+      volumes:
+        - name: nginx-index-file
+          configMap:
+            name: nginx-index-html-configmap
+      containers:
+        - name: nginx
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+            - name: nginx-index-file
+              mountPath: /usr/share/nginx/html/

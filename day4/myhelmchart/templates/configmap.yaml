@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  index.html: |
+    <html>
+    <head>
+    <title>Welcome to my NGINX helm web</title>
+    </head>
+    <body>
+    WEB CONTENT GOES HERE
+    </body>
+    <html>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: nginx-index-html-configmap

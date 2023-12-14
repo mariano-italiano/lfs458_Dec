@@ -1,0 +1,18 @@
+# Default values for myhelmchart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: "1.19.2"
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30100
+  label: my-svc
+
+

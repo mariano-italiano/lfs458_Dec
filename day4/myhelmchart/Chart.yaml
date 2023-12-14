@@ -1,0 +1,9 @@
+apiVersion: v2
+name: myhelmchart
+description: My test LFS458 Helm chart for Kubernetes
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+- email: youremail@goes.here
+  name: yourname

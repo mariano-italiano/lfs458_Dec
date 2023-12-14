@@ -219,3 +219,246 @@ vi ../day3-history.txt
 history
 cd ..
 history| awk '$1 > 813' | cut -c 8- > day4-history.txt
+git status
+git add .
+git commit -m "Adding day4 history and files"
+git push
+cd day4
+vi hpa-deployment.yaml
+vi hpa-service.yaml
+kubectl apply -f hpa-deployment.yaml 
+kubectl apply -f hpa-service.yaml 
+kubectl get all -l run=hpa-deployment
+kubectl autoscale deployment hpa-deployment --max 10 --min 2 --cpu-percent 60 -o yaml 
+kubectl autoscale deployment hpa-deployment --max 10 --min 2 --cpu-percent 60 -o yaml > hpa.yaml
+kubectl autoscale deployment hpa-deployment --max 10 --min 2 --cpu-percent 60 -o yaml --dry-run > hpa.yaml
+kubectl get all -l run=hpa-deployment
+vi hpa.yaml 
+kubectl appl -f hpa.yaml
+kubectl apply -f hpa.yaml
+kubectl get hpa
+kubectl top pod hpa-deployment-cf78bd856-
+kubectl top pod -l run=hpa-deployment
+kubectl get hpa
+vi load-generator.yaml
+kubectl apply -f load-generator.yaml
+kubectl get hpa
+kubectl top pod -l run=hpa-deployment
+wathc-n1 kubectl top pod -l run=hpa-deployment
+watch-n1 kubectl top pod -l run=hpa-deployment
+watch -n1 kubectl top pod -l run=hpa-deployment
+kubectl get hpa
+watch -n1 kubectl get hpa
+kubectl delete pod load-generator 
+watch -n1 kubectl get hpa
+kubectl top pod -l run=hpa-deployment
+watch -n1 kubectl get hpa
+kubectl get hpa -w
+wget https://get.helm.sh/helm-v3.11.0-linux-amd64.tar.gz
+sudo tar -xvf helm-v3.11.0-linux-amd64.tar.gz 
+sudo cp linux-amd64/helm /usr/local/bin/helm
+helm list
+helm --help
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm search repo bitnami/nginx
+helm search repo bitnami/postgres
+helm search repo bitnami/wordpress
+helm search repo bitnami/hashivault
+helm search repo bitnami/vault
+helm install bitnami/nginx 
+helm install bitnami/nginx --generate-name
+kubectl get svc --namespace default -w nginx-1702559122
+helm list
+helm uninstall nginx-1702559122
+kubectl create ns helm-web
+helm install bitnami/nginx my-helm-nginx  -n helm-web
+helm install bitnami/nginx -n my-helm-nginx  -n helm-web
+helm install --help
+helm install my-helm-nginx  bitnami/nginx  -n helm-web
+kubectl get all -n helm-web 
+helm show values bitnami/nginx
+helm show values bitnami/nginx | grep -v "#" > nginx-values.yaml
+vi nginx-values.yaml
+kubectl get ns
+kubectl create ns helm-web2
+helm install my-helm-nginx  bitnami/nginx  -n helm-web2 --values nginx-values.yaml 
+kubectl get all -n helm-web2
+helm list
+helm list -n helm-web
+helm list -n helm-web2
+kubectl create ns wordpress
+helm install my-wp bitnami/wordpress -n wordpress
+kubectl get svc --namespace wordpress my-wp-wordpress --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}"
+export SERVICE_IP=$(kubectl get svc --namespace wordpress my-wp-wordpress --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+kubectl get all -n wordpress 
+kubectl event
+kubectl events
+kubectl events -n wordpress 
+df -h
+kubectl events -n wordpress 
+kubectl -n wordpress get pv,pvc
+kubectl get pv,pvc
+kubectl get all
+helm create myhelmchart
+ls -la
+cd myhelmchart
+ls -la
+tree
+vi Chart.yaml 
+vi values.yaml 
+vi templates/service
+vi templates/service.yaml 
+vi values.yaml 
+vi templates/service.yaml 
+vi values.yaml 
+vi templates/service.yaml 
+vi values.yaml 
+vi templates/service.yaml 
+vi ../index.html
+kubectl create configmap nginx-index-html-configmap --from-file=../index.html
+kubectl create configmap nginx-index-html-configmap --from-file=../index.html -o yaml > templates/configmap.yaml\
+kubectl create configmap nginx-index-html-configmap --from-file=../index.html -o yaml > templates/configmap.yaml
+vi templates/configmap.yaml
+kubectl create configmap nginx-index-html-configmap --from-file=../index.html -o yaml --dry-run > templates/configmap.yaml
+kubectl delete cm nginx-index-html-configmap 
+vi templates/configmap.yaml
+vi templates/deployment.yaml 
+vi ../index.html
+vi values.yaml 
+vi templates/deployment.yaml 
+rm templates/serviceaccount.yaml 
+rm templates/hpa.yaml 
+rm templates/ingress.yaml 
+tree
+vi NOTES.txt
+vi templates/NOTES.txt
+cd ..
+helm lint myhelmchart
+helm package myhelmchart --version 0.1
+kubectl create ns test
+helm install my-nginx myhelmchart-0.1.tgz 
+helm install my-nginx myhelmchart-0.1.tgz -n test
+cd myhelmchart/
+vi templates/deployment.yaml 
+vi templates/service.yaml 
+vi templates/deployment.yaml 
+cd ..
+helm package myhelmchart --version 0.1
+rm myhelmchart-0.1.tgz 
+helm package myhelmchart --version 0.1
+helm install my-nginx myhelmchart-0.1.tgz -n test
+kubectl get all -n test
+helm install --help
+history| awk '$1 > 813' | cut -c 8- > ../day4-history.txt
+less ../day4-history.txt
+ls -la
+vi pi-job.yaml
+kubectl apply -f pi-job.yaml
+kubectl get jobs.batch 
+watch -n1 kubectl get jobs.batch 
+kubectl get jobs.batch 
+kubectl get pods
+vi sleep-job.yaml
+kubectl apply -f sleep-job.yaml
+kubectl get jobs.batch 
+watch -n1 kubectl get jobs.batch 
+kubectl get pods
+kubectl get events
+kubectl delete ns wordpress 
+kubectl get events
+kubectl get pods
+kubectl delete ns test
+kubectl delete ns helm-web
+kubectl delete ns helm-web2
+kubectl delete deployments.apps busybox-deployment 
+kubectl delete deployments.apps hpa-deployment 
+kubectl delete pod volume-pod 
+kubectl get pvc,pv
+kubectl get pods
+kubectl delete jobs.batch sleep-job 
+kubectl get pods
+kubectl apply -f sleep-job.yaml 
+kubectl get jobs.batch 
+watch -n1 kubectl get jobs.batch 
+watch -n1 kubectl get pods
+vi parallel-job.yaml
+watch -n1 kubectl get pods
+vi parallel-job.yaml
+kubectl apply -f parallel-job.yaml
+kubectl get jobs.batch 
+watch -n1 kubectl get jobs.batch 
+vi hello-cronjob.yaml
+kubectl apply -f hello-cronjob.yaml
+kubectl get cronjobs.batch 
+date
+kubectl get cronjobs.batch 
+date
+kubectl get jobs.batch 
+kubectl apply -f hello-cronjob.yaml
+vi hello-cronjob.yaml
+kubectl apply -f hello-cronjob.yaml
+date
+watch -n1 kubectl get pod
+kubectl logs hello-cronjob-28376071-vfpd5
+kubectl events 
+watch -n1 kubectl get pod
+kubectl delete cronjobs.batch hello-cronjob 
+watch -n1 kubectl get pod
+sudo journalctl -u kubelet
+sudo journalctl -u containerd
+sudo journalctl -p err
+sudo journalctl -p err -u kubelet
+sudo journalctl -p err -u containerd
+cd /var/log/
+ls -la
+cd containers
+ls -la
+cd ../pods/
+ls -la
+cd kube-system_kube-apiserver-k8s-master_2a9727933fc398ee986628926a756d42
+ls -la
+cd kube-apiserver/
+ls -la
+sudo ls -la
+sudo less 4.log
+cd 
+cd lfs458_Dec/
+cd ay4
+cd day4
+kubectl events
+kubectl logs <pod-name> -c <container-name>
+kubectl get pods
+kubectl logs pi-job-p84dc
+kubectl logs test-volume-nginx-65d4f976c-fgwmd
+kubectl run ephemeral-demo --image=pause:3.1 
+kubectl get pods
+kubectl delete pod ephemeral-demo 
+kubectl run ephemeral-demo --image=registry.k8s.io/pause:3.1 
+kubectl get pods
+kubectl exec -it ephemeral-demo  -- sh
+kubectl exec -it ephemeral-demo  -- bash
+kubectl debug -it ephemeral-demo --image=busybox --target=ephemeral-demo
+vi flask-app.yaml
+kubectl apply -f flask-app.yaml
+kubectl get pods
+kubectl get deploy
+kubectl get all -n app
+kubectl delete namespaces app
+vi flask-app.yaml 
+kubectl apply -f flask-app.yaml
+kubectl get all -n app
+watch -n1 kubectl get all -n app
+kubectl events
+kubectl events -n app
+kubectl get pv,pvc -n app
+kubectl -n app patch pv postgres-pv -p '{"spec":{"claimRef": null}}'
+watch -n1 kubectl get all -n app
+kubectl events -n app
+kubectl delete namespaces app
+kubectl get pv,pvc
+kubectl patch pv postgres-pv -p '{"spec":{"claimRef": null}}'
+kubectl get pv,pvc
+kubectl delete pv postgres-pv 
+kubectl apply -f flask-app.yaml 
+watch -n1 kubectl get all -n app
+history| awk '$1 > 813' | cut -c 8- > ../day4-history.txt

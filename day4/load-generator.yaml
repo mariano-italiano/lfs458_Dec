@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: load-generator
+spec:
+  containers:
+    - name: load-pod
+      image: fortio/fortio
+      args: ["load", "-t", "0", "-qps", "30", "hpa-service.default.svc.cluster.local"]
+  restartPolicy: Never
