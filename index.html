@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprzedaż Aut - Twoja Wymarzona Bryka</title>
+    <style>
+        /* Resetowanie domyślnych stylów */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Stylizacja menu */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        /* Sekcja główna */
+        .hero {
+            background: url('https://source.unsplash.com/1600x600/?cars,luxury') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .content h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #2c3e50;
+        }
+
+        .content p {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Stopka */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Nagłówek z menu -->
+    <header>
+        <div class="logo">Twoja Bryka</div>
+        <nav>
+            <ul>
+                <li><a href="#">Strona Główna</a></li>
+                <li><a href="#">Oferta</a></li>
+                <li><a href="#">O Nas</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sekcja powitalna -->
+    <section class="hero">
+        <div>
+            <h1>Znajdź swoje wymarzone auto!</h1>
+            <p>Najlepsza oferta samochodów nowych i używanych</p>
+        </div>
+    </section>
+
+    <!-- Sekcja treści -->
+    <section class="content">
+        <h2>Dlaczego warto nam zaufać?</h2>
+        <p>
+            Nasza firma oferuje szeroki wybór samochodów w konkurencyjnych cenach. 
+            Zaufało nam już tysiące klientów. Każde auto przechodzi szczegółową kontrolę techniczną, 
+            abyś Ty mógł cieszyć się bezpieczną i komfortową jazdą.
+        </p>
+    </section>
+
+    <!-- Stopka -->
+    <footer>
+        &copy; 2024 Twoja Bryka. Wszelkie prawa zastrzeżone.
+    </footer>
+</body>
+</html>
+
