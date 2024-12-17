@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.19.1
+  initContainers:
+  - name: delay
+    image: busybox
+    command: ['sleep', '30']
+  - name: showinfo
+    image: busybox
+    command: ['sh', '-c', 'echo Dwa inity sie skonczyły']

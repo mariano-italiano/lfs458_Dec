@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    kubernetes.io/app: myapp
+  name: mk-test
+spec:
+  containers:
+  - image: marcinkujawski/python-api:1.0
+    name: python-api 
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-pod2
+spec:
+  containers:
+  - name: web
+    image: nginx:1.19.2
+    volumeMounts:
+    - name: sharedvol
+      mountPath: /usr/share/nginx/html
+  initContainer:
+  - name: prepare
+    image: alpine:3.2
+    command: ['sh', '-c', 'apk update; apk add git; mkdir /app/app-content; git clone -b app1 https://github.com/mariano-italiano/lfs458_Dec.git /app/app-content; mv /app/app-content/lfs458_Dec/index.html /app/index.html']
+    volumeMounts:
+    - name: sharedvol
+      mountPath: /app
+  volumes:
+  - name: sharedvol
+    emptyDir: {}
