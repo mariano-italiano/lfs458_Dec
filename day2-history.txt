@@ -1,0 +1,328 @@
+kubectl get nodes
+sudo vi /etc/apt/sources.list.d/kubernetes.list 
+sudo apt-get update
+sudo apt-cache madison kubelet
+sudo apt-get install -y kubeadm=1.31.3-1.1
+sudo apt-get install -y kubeadm=1.31.3-1.1 --allow-change-held-packages
+sudo kubeadm upgrade plan
+sudo kubeadm upgrade plan v1.31.3
+sudo kubeadm upgrade apply v1.31.3
+kubectl get nodes
+kubectl drain k8s-master 
+kubectl get ds -A
+kubectl drain k8s-master --ignore-daemonsets
+kubectl get pod -A
+kubectl get pod -A -o wide
+kubectl get nodes
+sudo apt-get install -y kubectl=1.31.3-1.1 kubelet=1.31.3-1.1 --allow-change-held-packages
+kubectl get nodes
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+kubectl get nodes
+kubectl uncordon k8s-master 
+kubectl get nodes
+kubectl drain worker01
+kubectl drain worker01 --ignore-daemonsets
+sudo ls -la /etc/kubernetes/manifests/
+sudo ls -la /etc/kubernetes/
+sudo ls -la /etc/kubernetes/tmp/
+vi /etc/kubernetes/tmp/kubeadm-backup-etcd-2024-12-17-09-17-54
+sudo vi /etc/kubernetes/tmp/kubeadm-backup-etcd-2024-12-17-09-17-54
+sudo vi /etc/kubernetes/tmp/kubeadm-backup-manifests-2024-12-17-09-17-54
+kubectl get nodes
+kubectl uncordon worker01
+kubectl drain worker02 --ignore-daemonsets 
+kubectl uncordon worker02
+kubectl get nodes
+kubectl get pod -A
+kubectl get pod -o wide -A
+kubectl get nodes
+kubectl get pods
+cd lfs458_Dec/
+makdir day2
+mkdir day2
+cd day2/
+vi nginx-pod.yaml
+kubectl apply  -f nginx-pod.yaml
+kubectl get pod
+kubectl apply  -f nginx-pod.yaml -n kube-system
+kubectl get pod
+kubectl get pod -A
+kubectl delete -f nginx-pod.yaml -n kube-system 
+kubectl get pod
+kubectl get pod -o wide
+kubectl replace --force -f nginx-pod.yaml 
+kubectl get pod -o wide
+kubectl describe pod nginx-pod 
+kubectl edit pod nginx-pod 
+kubectl describe pod nginx-pod 
+kubectl edit pod nginx-pod 
+kubectl run mk-test --labels kubernetes.io/app=myapp --image marcinkujawski/python-api:1.0 
+kubectl  get pods
+kubectl run mk-test --labels kubernetes.io/app=myapp --image marcinkujawski/python-api:1.0 --dry-run=client -o yaml 
+kubectl run mk-test --labels kubernetes.io/app=myapp --image marcinkujawski/python-api:1.0 --dry-run=client -o yaml > mk-pod.yaml
+vi mk-pod.yaml
+kubectl apply -f mk-pod.yaml
+vi mk-pod.yaml
+kubectl apply -f mk-pod.yaml
+vi mk-pod.yaml
+kubectl get pod
+kubectl run ubuntu --image ubuntu
+watch -n1 kubectl get pod
+kubectl run ubuntu --image ubuntu --dry-run=client -o yaml
+kubectl run ubuntu --image ubuntu --dry-run=client -o yaml > ubuntu.yaml
+vi ubuntu.yaml
+kubectl apply  -f ubuntu.yaml
+kubectl delete pod ubuntu 
+kubectl apply  -f ubuntu.yaml
+watch -n1 kubectl get pod
+kubectl logs ubuntu 
+vi ubuntu.yaml
+kubectl delete ub
+kubectl delete pod ubuntu 
+kubectl apply  -f ubuntu.yaml
+watch -n1 kubectl get pod
+vi busy-pod.yaml
+kubectl apply -f busy-pod.yaml
+kubectl get pod
+kubectl get pod -o wide
+kubectl get pod -o wide --sort-by .spec.nodeName 
+kubectl get pod ubuntu -o json 
+kubectl get pod -o wide --sort-by .metadata.name
+kubectl get pod -o wide --sort-by .status.podIP
+kubectl get pod --help
+kubectl get pod -l kubernetes.io/zone
+kubectl get pod --show-labels 
+kubectl get pod -l kubernetes.io/app
+kubectl get pod -l kubernetes.io/app=web
+kubectl get pod -l kubernetes.io/app=myapp
+kubectl get pods -A
+kubectl get pods -A --show-labels 
+kubectl get pods -A -l 'tier in(control-plane)'
+kubectl get pods -A -l 'tier in(control-plane),component notin (etcd)'
+kubectl exec -it ubuntu -- sh
+kubectl exec -it ubuntu -- bash
+kubectl exec -it ubuntu -- ls -la 
+kubectl exec -it ubuntu -- hostname
+kubectl exec -it ubuntu -- uptime
+uptime
+kubectl exec -it ubuntu -- bash
+kubectl run mk-ubuntu --image marcinkujawski/ubuntu:user 
+kubectl get pod
+kubectl exec -it mk-ubuntu bash
+kubectl exec -it mk-ubuntu -- bash
+kubectl exec -it nginx-pod -- bash
+kubectl get pods
+ls -la
+vi ubuntu.yaml 
+kubectl exec  -it ubuntu -- bash
+kubectl exec  -it ubuntu -- printenv HOSTNAME
+kubectl api-resources 
+kubectl api-resources | grep -i pod
+kubectl api-versions 
+kubectl cluster-info 
+vi \$HOME/.kube/config
+vi $HOME/.kube/config
+echo "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURLVENDQWhHZ0F3SUJBZ0lJRUlxZTJqbk9BQWt3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRFeU1UWXhOVEF6TlRoYUZ3MHlOVEV5TVRZeE5UQTROVGxhTUR3eApIekFkQmdOVkJBb1RGbXQxWW1WaFpHMDZZMngxYzNSbGNpMWhaRzFwYm5NeEdUQVhCZ05WQkFNVEVHdDFZbVZ5CmJtVjBaWE10WVdSdGFXNHdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDcy9waEcKQ0xNTXJYYndFcmQ5MFlNOW1zNkpzWThWM2twRUZCMjBhR3BzSkhhWktXVTY3R3lCdEo5azRYUkNUdFFWY2JuUApnS3ZiZ3pFZ2lodTU4WkNOdTJzUG92WDByWnlQVlNnRGJiMU5PRnA1SEpBREo1NGRzelBRZVdmS2pyd1ZxTmgyCmd1bjFXa3h0OHFQV1JiVzRpMWxUOTNDYkV6SURYSzZCdk1NdlM4MmN4ZjRaTGpPWkw0VVJ5RWRwNW5HaDdFMk0KVnR6Y1dhQllGUFIwSUdqRVZMYktWOXQzV1hHZlYyai9kUmxJeFBvcU1zQU1BKytzbHBhL00zZktIZkp1a3VGQQo5bW5mdisxT0ZmWjJad1lzTEhHMGtzNEZDeG1LaCtKT2pUZGNBYldFdk1hd3U5V1lZZ2t4Ui8yZUtzbXg3dURZCkNsblR2S0thWndHZmxGT2JBZ01CQUFHalZqQlVNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUsKQmdnckJnRUZCUWNEQWpBTUJnTlZIUk1CQWY4RUFqQUFNQjhHQTFVZEl3UVlNQmFBRkMzVmlod20wdlFnQThLVwp1ZkN4L3o1dEJUL05NQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJUNWlxRWJEcFkyV3RTNDhEREk4eTdTellXCjhCV1REWjhid2hkY1grSFlSL0luV0VDOStHL2JrQUhCakhUMVRmL1k0dE5qVmljTmJrbzU5K0src3g0S1hlbnEKU1gwNW1WcVE4OVY5MGtidGNJT0laaHlRVUsrUnlDdVlrUTZIc0hRS0ZNYW1Cei9YSnZFaDF3azJ4ZWJDTGpPWApkM3duM2VGOExRT2o2R2VwbW1tcll1VUhLeitRcFBmc2xOUElCblZnNitZQVAraWswOUk0U2xJNGpwTy9SK2RUCkQ1bDVHY3VuYnhXQWEwWEM1WHJmaEIxQmhJSkNSR3pzczVLN25FaHduckduK0tlTklHek5GZE1BcVU0VlZtY28KT3lVVzB3RVB4Y2hFUlIwRDZJSHgrdzNvQ1JTY0d6ZTNGUUc2NUdFeGhFWDZoQllYbEtvbDFlN3ZmZ3RvCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K" | base64 -d
+vi $HOME/.kube/config
+grep client-cert $HOME/.kube/config|cut -d " " -f 6
+export client=$(grep client-cert $HOME/.kube/config|cut -d " " -f 6)
+echo $client 
+export key=$(grep client-key $HOME/.kube/config|cut -d " " -f 6)
+echo $key 
+export cacert=$(grep certificate-authority $HOME/.kube/config|cut -d " " -f 6)
+echo  $cacert 
+echo  $cacert | base64 -d - > ca.pem
+echo  $clien | base64 -d - > client.pem
+echo  $client | base64 -d - > client.pem
+echo $key  | base64 -d - > client.key
+ls -la 
+vi client.key 
+curl --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/
+curl https://192.168.1.100:6443/
+curl -k https://192.168.1.100:6443/
+curl --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/version
+curl --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes
+curl --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[].metadata.name'
+sudo apt  install jq -y
+curl --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[].metadata.name'
+curl -S --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[].metadata.name'
+curl --silent --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[].metadata.name'
+curl --silent --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node Name: \(.metadata.name)'
+curl --silent --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node Name: \(.metadata.name)"'
+curl --silent --cert client.pem --key client.key --cacert ca.pem https://192.168.1.100:6443/api/v1/nodes | jq -r '.items[] | "Node Name: \(.metadata.name), Labels: \(.metadata.labels)"'
+openssl genrsa -out devops.key
+ls -la
+openssl req -new -key devops.key -out devops.csr -subj "/CN=devops"
+ls -la
+vi devops.csr
+cat devops.csr | base64 
+cat devops.csr | base64 | tr -d '\n' 
+vi user-request-devops/yaml
+vi user-request-devops.yaml
+kubectl apply -f user-request-devops.yaml
+kubectl get csr
+kubectl certificate approve user-request-devops
+kubectl get csr
+kubectl get csr user-request-devops -o yaml
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}'
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}' | base64 -d > devops.crt
+vi devops.crt
+kubectl config 
+kubectl config current-context 
+kubectl config get-contexts 
+kubectl config use-context cotex1
+kubectl  --kubeconfig /tmp/config1 get nodes
+kubectl --kubeconfig config-devops config set-cluster dev --insecure-skip-tls-verify=true --server https://192.168.1.100:6443 
+vi config-devops 
+kubectl --kubeconfig config-devops config set-credentials devops --client-certificate devops.crt --client-key client.key --embed-certs=true
+vi config-devops 
+kubectl --kubeconfig config-devops config set-context devops-context --cluster dev --user devops
+vi config-devops 
+kubectl --kubeconfig config-devops config use-context devops-context
+vi config-devops 
+kubectl create ns dev-app1
+kubectl -n dev-app1 create role --help
+kubectl -n dev-app1 create role devops-role --verb=get,list,watch --resource=pods 
+kubectl describe role -n dev-app1 devops-role 
+sudo useradd -m devops
+kubectl -n dev-app1 create rolebinding devops-rolebinding --help
+kubectl -n dev-app1 create rolebinding devops-rolebinding --role devops-role --user=devops 
+sudo cp -rp config-devops /home/devops/
+sudo -i
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}'
+ls -la
+kubectl --kubeconfig config-devops config set-credentials devops --client-certificate devops.crt --client-key devops.key --embed-certs=true
+cat config-devops 
+sudo -i
+kubectl -n dev-app1 create role devops-role --verb=get,list,watch --resource=deployments --dry-run=client -o yaml 
+kubectl edit role -n dev-app1 devops-role 
+kubectl describe -n dev-app1 role devops-role 
+sudo -i 
+kubectl get clusterrole
+kubectl describe clusterrole view
+kubectl describe clusterrole edit
+kubectl get pods
+vi init-pod.yaml
+kubectl apply -f init-pod.yaml
+watch -n1 kubectl get pods
+kubectl exec -it init-pod -- bash
+kubectl exec -it init-pod -c delay -- bash
+kubectl logs init-pod 
+kubectl logs init-pod --all-containers 
+kubectl logs nginx-pod 
+vi sidecar-pod.yaml
+kubectl apply -f sidecar-pod.yaml
+kubectl get pods
+kubectl exec -it sidecar-pod -- bash
+kubectl exec -it sidecar-pod -- sh
+kubectl exec -it sidecar-pod -c sidecar -- sh
+kubectl logs sidecar-pod 
+kubectl logs sidecar-pod --all-containers 
+vi init-pod.yaml
+cp -rp sidecar-pod.yaml init-pod2.yaml
+vi init-pod2.yaml
+git status
+cd ..
+git status
+git pull
+git status
+git add day2
+git commit -m "adding day2 files"
+git push
+git branch
+git checkout app1 
+git status
+vi index.html
+git add index.html 
+git commit -n "adding index.html"
+git commit -m "adding index.html"
+git push
+ls -la
+git pull
+git status
+ls --la
+ls -la
+rm day1-history.txt deploy-k8s-rhel.sh deploy-k8s.sh 
+git status
+git add .
+git commit -m "remove not required files"
+git push
+git checkout master 
+git status
+ls -la
+cd day2
+kubectl apply  -f init-pod2.yaml 
+vi init-pod2.yaml
+kubectl apply  -f init-pod2.yaml 
+kubectl get pod 
+watch -n 1 kubectl get pod
+kubectl logs init-pod2
+kubectl exec -it init-pod2 -c prepare -- sh
+watch -n 1 kubectl get pod
+vi init-pod2.yaml 
+kubectl replace --force -f init-pod2.yaml
+watch -n 1 kubectl get pod
+vi init-pod2.yaml 
+kubectl replace --force -f init-pod2.yaml
+watch -n 1 kubectl get pod
+kubectl events
+vi init-pod2.yaml 
+kubectl replace --force -f init-pod2.yaml
+watch -n 1 kubectl get pod
+kubectl exec -it init-pod2 -- bash
+vi init-pod2.yaml 
+kubectl replace --force -f init-pod2.yaml
+watch -n 1 kubectl get pod
+vi init-pod2.yaml 
+kubectl exec -it init-pod2 -- bash
+vi init-pod2.yaml 
+kubectl replace --force -f init-pod2.yaml
+watch -n 1 kubectl get pod
+kubectl exec -it init-pod2 -- bash
+kubectl get pod -o wide
+cp -rp init-pod2.yaml init-pod3.yaml
+vi init-pod3.yaml
+kubectl apply -f init-pod3.yaml
+watch -n 1 kubectl get pod
+vi web-svc.yaml
+vi init-pod3.yaml
+kubectl apply -f init-pod3.yaml
+kubectl get pod --show-labels 
+vi web-svc.yaml
+watch -n 1 kubectl get pod
+kubectl apply -f web-svc.yaml
+watch -n 1 kubectl get pod
+kubectl logs init-pod3
+kubectl logs init-pod3 --all-
+kubectl logs init-pod3 --all-containers 
+kubectl get pods -o wide
+curl http://10.0.3.157
+curl http://10.0.3.82
+kubectl get pod
+kubectl get pod --show-labels 
+kubectl expose pod sidecar-pod --port 80 --name sidecar-svc
+kubectl expose pod init-pod2 --port 80 --name clusterip-svc 
+kubectl edit pod init-pod2 
+kubectl expose pod init-pod2 --port 80 --name clusterip-svc 
+kubectl get pods,svc,ep
+kubectl get pods,svc,ep -o wide
+curl http://10.108.121.165
+kubectl get pods,svc,ep -o wide
+kubectl exec -it ubuntu -- bash
+kubectl get pods
+kubectl exec -it busy-pod -- bash
+kubectl exec -it busy-pod -- sh
+kubectl expose pod init-pod2 --port 80 --name nodeport-svc --type NodePort
+kubectl get svc
+kubectl expose pod init-pod2 --port 80 --name lb-svc --type LoadBalancer
+kubectl get svc
+kubectl edit svc lb-svc 
+kubectl get svc
+kubectl expose pod init-pod2 --port 80 --name lb-svc --type LoadBalancer --dry-run=client -o yaml
+git status
+git add .
+git commit -m "adding day 3 files"
+git push
+history 
+history| awk '$1 > 145' | cut -c 8- > ../day2-history.txt
