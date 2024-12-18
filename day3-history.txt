@@ -1,0 +1,276 @@
+cd lfs458_Dec/
+cd day3
+kubectl get pods
+kubectl get nodes
+kubectl get pods
+kubectl delete all --all
+kubectl get nodes
+kubectl get podes
+kubectl get pods
+kubectl apply -f readiness-pod.yaml 
+watch -n1 kubectl get pod
+vi readiness-pod.yaml 
+kubectl replace --force -f readiness-pod.yaml
+watch -n1 kubectl get pod
+kubectl event 
+kubectl events
+cp -rp readiness-pod.yaml readiness-pod2.yaml 
+vi readiness-pod2.yaml
+kubectl apply -f readiness-pod2.yaml
+vi readiness-pod2.yaml
+kubectl apply -f readiness-pod2.yaml
+watch -n1 kubectl get pod
+vi readiness-pod2.yaml
+kubectl replace --force -f readiness-pod2.yaml
+watch -n1 kubectl get pod
+vi readiness-pod2.yaml
+kubectl replace --force -f readiness-pod2.yaml
+watch -n1 kubectl get pod
+vi readiness-pod2.yaml
+watch -n1 kubectl get pod
+kubectl events 
+kubectl get events -n default --sort-by .metadata.creationTimestamp
+vi liveness-pod.yaml
+kubectl apply -f liveness-pod.yaml 
+watch -n1 kubectl get pod
+kubectl exec -it liveness-pod -c my-app -- bash
+kubectl exec -it liveness-pod -c my-app --
+kubectl exec -it liveness-pod -c my-app -- bash
+watch -n1 kubectl get pod
+kubectl exec -it liveness-pod -c my-app -- bash
+vi liveness-pod.yaml 
+kubectl replace --force -f liveness-pod.yaml
+watch -n1 kubectl get pod
+kubectl events
+kubectl describe pod liveness-pod 
+kubectl get pods
+vi liveness-pod.yaml 
+kubectl get pods readiness-pod -o yaml
+kubectl get pods readiness-pod -o yaml > readiness-pod.output
+vi readiness-pod.output
+kubectl apply -f readiness-pod.output
+kubectl get cj -A
+sudo ls /etc/kubernetes/manifests/
+sudo ls /etc/kubernetes/manifests/ -la
+kubectl get pod -A
+kubectl run test1 --image nginx --dry-run=client -o yaml
+kubectl get pod -A
+kubectl delete pod test1-worker01
+kubectl get pod -A
+kubectl get pod liveness-pod -o yaml
+kubectl get rs
+vi my-replicaset.yaml
+kubectl apply -f my-replicaset.yaml
+kubectl get rs,pod
+kubectl get rs,pod -o wide
+kubectl delete pod my-replicaset-p7bls
+kubectl get rs,pod -o wide
+kubectl get pod --show-labels 
+kubectl run test-pod --label tier=frontend --image nginx
+kubectl run test-pod --labels tier=frontend --image nginx
+kubectl get pod --show-labels 
+kubectl get rs,pod -o wide
+kubectl get rs,pod -o wide --show-labels 
+kubectl get pod
+kubectl run test-pod --labels tier=frontend2 --image nginx
+kubectl get pod
+kubectl edit  pod test-pod 
+kubectl get pod
+kubectl edit pod liveness-pod 
+kubectl get pod
+kubectl delete rs my-replicaset 
+kubectl run test-pod --labels tier=frontend --image nginx
+kubectl get pod
+kubectl get pod --show-labels 
+kubectl apply -f my-replicaset.yaml 
+kubectl get pod --show-labels 
+kubectl delete pod test-pod 
+kubectl get pod --show-labels 
+kubectl get pod,rs --show-labels 
+kubectl scale rs my-replicaset --replicas 10
+kubectl get pod,rs --show-labels 
+kubectl scale rs my-replicaset --replicas 1
+kubectl get pod,rs --show-labels 
+kubectl rollout restart rs my-replicaset 
+vi nginx-deployment.yaml
+kubectl apply -f nginx-deployment.yaml
+kubectl get deploy 
+kubectl get deploy,pod
+kubectl get deploy,rs,pod
+kubectl describe deployments.apps nginx-deployment 
+kubectl edit deployments.apps nginx-deployment 
+vi nginx-deployment.yaml 
+kubectl replace --force -f nginx-deployment.yaml
+kubectl describe deployments.apps nginx-deployment 
+kubectl set image deployments nginx-deployment web=nginx:1.16.2
+kubectl get pods
+kubectl set image deployments nginx-deployment web=nginx:1.19.2
+kubectl get pods
+watch -n1 kubectl get pods
+kubectl describe deployments.apps nginx-deployment 
+kubectl rollout status deployment nginx-deployment 
+kubectl rollout history deployment nginx-deployment 
+kubectl annotate deployment/nginx-deployment kubernetes.io/change-cause="updated image from 1.14.2 to 1.19.2, implementer: MArcin K. Change No: 112345, team: DSO, date: 18.12.2024"
+kubectl rollout history deployment nginx-deployment 
+kubectl set image deployments nginx-deployment web=nginx:latest --record
+kubectl rollout status deployment nginx-deployment
+kubectl rollout history deployment nginx-deployment 
+kubectl edit deployments.apps nginx-deployment 
+kubectl rollout status deployment nginx-deployment
+kubectl get pods
+kubectl rollout history deployment nginx-deployment 
+kubectl rollout undo deployment nginx-deployment --to-revision 3
+kubectl rollout history deployment nginx-deployment 
+kubectl get pods
+kubectl describe deployments.apps nginx-deployment 
+kubectl get rs
+kubectl rollout history deployment nginx-deployment 
+kubectl get pods
+kubectl describe rs nginx-deployment-8c5695586
+kubectl describe rs nginx-deployment-6fdbdddbcc 
+kubectl describe rs nginx-deployment-8c5695586
+kubectl delete rs nginx-deployment-8c5695586 
+kubectl rollout history deployment nginx-deployment 
+kubectl get rs
+kubectl edit deployments.apps nginx-deployment 
+kubectl get rs
+kubectl get pods
+watch -n1 kubectl get pods
+kubectl get rs
+kubectl rollout history deployment nginx-deployment 
+kubectl get pods -o wide
+kubectl drain worker02 --ignore-daemonsets 
+kubectl drain worker02 --ignore-daemonsets --delete-emptydir-data
+kubectl drain worker02 --ignore-daemonsets --delete-emptydir-data --force
+kubectl get pods -o wide
+kubectl get nodes
+kubectl uncordon worker02
+kubectl get nodes
+kubectl get pods -o wide
+kubectl rollout restart deployment nginx-deployment 
+kubectl get pods -o wide
+kubectl describe rs nginx-deployment-b7b8b8db5
+kubectl get pod --show-labels 
+kubectl delete pod -l app=nginx
+kubectl describe node k8s-master 
+vi my-daemonset.yaml
+kubectl apply  -f my-daemonset.yaml
+kubectl get ds,pod -o wide
+vi my-daemonset.yaml 
+kubectl apply  -f my-daemonset.yaml
+kubectl get ds,pod -o wide
+vi my-statefulset.yaml
+kubectl apply -f my-statefulset.yaml
+kubectl get sts,pod
+kubectl scale sts nginx-stfs --replipcas 12
+kubectl scale sts nginx-stfs --replicas 12
+watch -n1 kubectl get sts,pod
+vi my-statefulset.yaml 
+kubectl set image statefulsets nginx-stfs stfs-container:nginx:1.19.2
+kubectl set image statefulsets nginx-stfs stfs-container=nginx:1.19.2
+watch -n1 kubectl get sts,pod
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml
+kubectl get all -n ingress-nginx
+kubectl create deployment books --image nginx --replicas 1 
+kubectl create deployment food --image nginx --replicas 1 
+kubectl expose deployment books --name books-svc --port 80
+kubectl expose deployment food --name food-svc --port 80
+kubectl get svc,pod
+kubectl get svc,pod,ep -o wide
+vi index-books.html
+vi index-food.html
+kubectl cp --help
+kubectl cp index-books.html books-654947f569-v44d9:/usr/share/nginx/html/index.html
+kubectl cp index-food.html food-f87bc8b75-76wvq:/usr/share/nginx/html/index.html
+kubectl get svc
+kubectl get ingressclasses.networking.k8s.io 
+vi web-ingress.yml
+kubectl get svc -n ingress-nginx 
+kubectl edit  svc -n ingress-nginx ingress-nginx-controller
+kubectl get svc -n ingress-nginx 
+vi web-ingress.yml
+kubectl apply -f web-ingress.yml
+kubectl get ingress web-ingress 
+kubectl describe ingress web-ingress 
+kubectl edit ingress web-ingress 
+kubectl describe ingress web-ingress 
+kubectl cluster-info dump 
+kubectl cluster-info dump  | grep pod-cidr
+kubectl cluster-info dump  | grep -i cluster-cidr
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods -o wide | grep -i worker01 | wc -l
+kubectl get pods -o wide | grep -i worker02 | wc -l
+kubectl drain worker02
+kubectl drain worker02 --ignore-daemonsets 
+kubectl get pods -o wide | grep -i worker02 | wc -l
+kubectl get pods -o wide | grep -i worker01 | wc -l
+kubectl uncordon worker02
+kubectl get nodes
+kubectl get pods -A -o wide
+kubectl get pods -o wide
+kubectl get pods -o wide | grep -i worker01 | wc -l
+kubectl get pods -o wide | grep -i worker02 | wc -l
+kubectl get pods -o wide | grep -i worker01 | wc -l
+kubectl run test-pod --image nginx
+kubectl get pods -o wide | grep -i worker02 | wc -l
+kubectl get pods -o wide | grep -i worker01 | wc -l
+vi nodename-pod.yaml
+kubectl apply -f nodename-pod.yaml
+kubectl get pods -o wide
+cp -rp nodename-pod.yaml nodeselector-pod.yaml
+vi nodeselector-pod.yaml
+kubectl apply -f nodeselector-pod.yaml
+vi nodeselector-pod.yaml
+kubectl apply -f nodeselector-pod.yaml
+kubectl get pods -o wide
+kubectl events
+kubectl label nodes worker01 kubernetes.io/zone=dmz
+kubectl events
+kubectl get pods -o wide
+kubectl get nodes --show-labels 
+kubectl taint node worker02 kubernetes.io/env=prod:NoSchedule 
+kubectl describe nodes  worker02 
+kubectl describe nodes  worker01
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[])"'
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl create deployment test-deployshcedule --image nginx --replicas 3
+kubectl get pod -o wide
+kubectl edit deployments.apps test-deployshcedule 
+kubectl get pod -o wide
+kubectl edit deployments.apps test-deployshcedule 
+kubectl get pod -o wide
+kubectl edit deployments.apps test-deployshcedule 
+kubectl edit pod test-pod 
+kubectl taint node worker02 kubernetes.io/zone=danger:NoExecute; watch -n1 kubectl get pods
+kubectl taint node  worker02 kubernetes.io/zone-
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl edit pod test-pod 
+kubectl get pods -o wide
+kubectl taint node worker02 kubernetes.io/zone=danger:NoExecute; watch -n1 kubectl get pods
+kubectl rollout restart deployment test-deployshcedule 
+watch -n1 kubectl get pods -o wide
+vi with-node-affinity.yaml
+kubectl taint  node worker02 kubernetes.io/zone-
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl taint  node worker02 kubernetes.io/env-
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl label node worker01 kubernetes.io/country=poland
+kubectl label node worker02 kubernetes.io/country=france
+vi with-node-affinity.yaml
+kubectl label node worker01 kubernetes.io/disks=ssd
+kubectl get nodes --show-labels 
+kubectl apply -f with-node-affinity.yaml 
+kubectl get pod -o wide
+vi with-pod-affinity.yaml
+kubectl edit pod with-node-affinity 
+kubectl get pod --show-labels -o wide
+kubectl apply -f with-pod-affinity.yaml 
+kubectl get pod -o wide
+vi with-pod-antiaffinity.yaml
+kubectl apply -f with-pod-antiaffinity.yaml
+kubectl get pod -o wide
+cd ..
+history 
+history | grep reboot -n
+history| awk '$1 > 479' | cut -c 8- > day3-history.txt

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: readiness-pod
+spec:
+  initContainers:
+  - name: prepare
+    image: busybox
+    command: ["sh", "-c", 'echo -e "#!/bin/bash\ncurl http://localhost\nexit 1" > /tmp/check-script.sh; chmod +x /tmp/check-script.sh']
+    volumeMounts:
+    - name: vol1
+      mountPath: /tmp
+  containers:
+  - name: my-app
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: vol1
+      mountPath: /tmp
+    readinessProbe:
+      exec:
+        command:
+        - /bin/sh
+        - -c
+        - /tmp/check-script.sh
+      initialDelaySeconds: 20
+      periodSeconds: 15
+  volumes:
+  - name: vol1
+    emptyDir: {}

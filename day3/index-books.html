@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteka Online - Książki, Wypożyczanie i Sprzedaż</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            width: 250px;
+            text-align: center;
+            padding: 20px;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Biblioteka Online - Książki, Wypożyczanie, Sprzedaż</h1>
+    </header>
+    <nav>
+        <a href="#">Strona Główna</a>
+        <a href="#">Wypożycz Książkę</a>
+        <a href="#">Sprzedaj Książkę</a>
+        <a href="#">Zarejestruj się</a>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <img src="https://via.placeholder.com/250" alt="Książka">
+            <h3>Wypożycz Książkę</h3>
+            <p>Znajdź książki, które chcesz wypożyczyć. Wypożycz na określony czas!</p>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/250" alt="Książka">
+            <h3>Sprzedaj Książkę</h3>
+            <p>Masz książki do sprzedaży? Przedstaw swoją ofertę innym użytkownikom!</p>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/250" alt="Książka">
+            <h3>Przeglądaj Katalog</h3>
+            <p>Przeglądaj nasz katalog i znajdź najlepsze książki do wypożyczenia lub zakupu.</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Biblioteka Online. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+</body>
+</html>
+
