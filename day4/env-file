@@ -1,0 +1,6 @@
+var1=5
+# define branch name
+branch=develop
+
+# section for application config
+configfile=/tmp/file1

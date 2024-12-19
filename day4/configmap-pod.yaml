@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-pod
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "env; while true; do sleep 3600; done"]
+      env:
+        # Define the environment variable
+        - name: APP_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: mix-cm
+              # Specify the key associated with the value
+              key: service.json
+      envFrom:
+      - configMapRef:
+          name: fromenv

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpa-deployment
+spec:
+  selector:
+    matchLabels:
+      run: hpa-deployment
+  template:
+    metadata:
+      labels:
+        run: hpa-deployment
+    spec:
+      containers:
+      - name: hpa-deployment
+        image: registry.k8s.io/hpa-example
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hpa-service
+  labels:
+    run: hpa-deployment
+spec:
+  ports:
+  - port: 80
+    nodePort: 30080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: hpa-deployment
+  type: NodePort

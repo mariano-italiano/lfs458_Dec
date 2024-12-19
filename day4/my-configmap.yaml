@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: my-configmap
+data:
+  key1: value1
+  klucz2: "3"
+  version: "1.0"
+  ssh_config: |
+    Include /etc/ssh/sshd_config.d/*.conf
+    KbdInteractiveAuthentication no
+    UsePAM yes
+    X11Forwarding yes
+    PrintMotd no
+    
+    
+    AcceptEnv LANG LC_*
+    
+    Subsystem       sftp    /usr/lib/openssh/sftp-server
+
+  config.json: |
+    {
+      "attribute1": "val1",
+      "attribute2": "test" }
+

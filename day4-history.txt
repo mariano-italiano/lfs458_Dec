@@ -1,0 +1,129 @@
+cd lfs458_Dec/
+mkdir day4
+ls 
+cd day4
+vi volume-pod.yaml
+kubectl apply -f volume-pod.yaml
+kubectl get pods
+kubectl describe pod volume-pod 
+kubectl exec -it volume-pod -- bash
+kubectl edit pod volume-pod 
+kubectl get pods
+kubectl get pods -o wide
+vi volume-pod.yaml 
+kubectl replace -f volume-pod.yaml --force 
+kubectl get pods -o wide
+kubectl exec -it volume-pod -- bash
+vi volume-pod.yaml 
+kubectl replace -f volume-pod.yaml --force 
+kubectl exec -it volume-pod -- bash
+sudo apt install nfs-common nfs-kernel-server cifs-utils -y
+sudo apt-get update
+sudo apt install nfs-common nfs-kernel-server cifs-utils -y
+sudo apt-get install nfs-common nfs-kernel-server cifs-utils -y
+sudo apt-get install nfs-common nfs-kernel-server cifs-utilsy
+sudo apt-get install nfs-common nfs-kernel-server cifs-utils
+sudo dpkg --configure -a
+sudo apt-get install nfs-common nfs-kernel-server cifs-utils
+vi test-pv.yaml
+kubectl get sc
+vi test-pv.yaml
+kubectl apply -f test-pv.yaml
+kubectl apply -f test-pv.yaml -n kube-system
+kubectl get pv -A
+vi test-pvc.yaml
+kubectl apply -f test-pvc.yaml
+kubectl get pv,pvc
+vi test-pvc.yaml 
+kubectl apply -f test-pvc.yaml
+kubectl replace --force -f test-pvc.yaml
+kubectl get pv,pvc
+vi pv-pod.yaml
+kubectl apply -f pv-pod.yaml
+kubectl get pod
+kubectl events
+vi pv-pod.yaml 
+kubec get pvc,pv
+kubectl get pvc,pv
+vi pv-pod.yaml 
+kubectl replace --force -f pv-pod.yaml
+kubectl get pod
+kubectl get pod -o wide
+sudo vi /etc/exports 
+ls -la ../
+sudo exportfs -rav\
+sudo exportfs -rav
+sudo systemctl restart nfs-kernel-server
+vi nfs-pv.yaml
+kubectl apply -f nfs-pv.yaml
+vi nfs-pvc.yaml
+kubectl apply -f nfs-pvc.yaml
+kubectl get pv,pvc
+cp -rp pv-pod.yaml nfs-pod.yaml
+vi nfs-pod.yaml
+kubectl apply -f nfs-pod.yaml
+kubectl get pods
+kubectl events
+vi nfs-pod.yaml
+kubectl replace --force -f nfs-pod.yaml
+kubectl get pods nfs-pod 
+kubectl events
+cd ..
+ls -la
+kubectl exec -it nfs-pod -- bash
+kubectl exec -it nfs-pod -- sh
+kubectl delete pod nfs-pod 
+kubectl delete pvc nfs-pvc 
+kubectl get pv
+cd day4; kubectl apply -f nfs-pvc.yaml
+kubectl get pv
+kubectl describe pv nfs-pv -o yaml
+kubectl get pv nfs-pv -o yaml
+kubectl patch pv nfs-pv -p '{"spec":{"claimRef": null }}'
+kubectl get pv
+kubectl delete pvc nfs-pvc 
+kubectl get pv
+kubectl patch pv nfs-pv -p '{"spec":{"claimRef": null }}'
+kubectl get pv
+kubectl delete pvc task-pvc 
+kubectl get pv,pvc
+kubectl edit pvc task-pvc 
+kubectl get pv,pvc
+kubectl delete pod pv-pod 
+kubectl get pv,pvc
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+kubectl get all -n local-path-storage
+kubectl get sc
+kubectl get sc local-path -o yaml
+kubectl edit sc local-path 
+kubectl get sc
+cp -rp test-pvc.yaml dynamic-pvc.yaml
+vi dynamic-pvc.yaml
+kubectl apply -f dynamic-pvc.yaml
+kubectl get pv,pvc
+kubectl delete pv nfs-pv test-pv 
+kubectl get pv,pvc
+cp -rp pv-pod.yaml dynamic-pod.yaml
+vi dynamic-pod.yaml
+kubectl apply -f dynamic-pod.yaml
+kubectl get pod dynamic-pod 
+kubectl get pv,pvc
+kubectl delete pod dynamic-pod 
+kubectl get pv,pvc
+kubectl delete pvc dynamic-pvc 
+kubectl get pv,pvc
+ls -la
+vi two-pvs.yaml
+kubectl apply -f two-pvs.yaml
+kubectl get pv
+cp -rp test-pvc.yaml controlled-pvc.yaml
+vi controlled-pvc.yaml
+kubectl apply -f controlled-pvc.yaml
+kubectl get pv,pvc
+kubectl delete pvc controlled-pvc 
+vi controlled-pvc.yaml 
+kubectl apply -f controlled-pvc.yaml
+kubectl get pv,pvc
+history
+cd ..
+history| awk '$1 > 763' | cut -c 8- > day4-history.txt
