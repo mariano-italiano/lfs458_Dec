@@ -127,3 +127,220 @@ kubectl get pv,pvc
 history
 cd ..
 history| awk '$1 > 763' | cut -c 8- > day4-history.txt
+vi my-configmap.yaml
+cat /etc/ssh/sshd_config|grep -v "#"
+vi my-configmap.yaml
+kubectl apply -f my-configmap.yaml
+kubectl get cm
+kubectl get cm my-configmap 
+kubectl describe cm my-configmap
+kubectl create cm test-cm --from-literal username=root --from-literal branchname=v1.0
+kubectl describe cm test-cm 
+vi service.json
+kubectl create cm service-cm --from-file service.json 
+kubectl describe cm service-cm 
+vi env-file
+kubectl create configmap fromenv --from-env-file env-file 
+kubectl describe cm fromenv 
+kubectl create cm mix-cm --from-literal test1=test2 --from-file service.json 
+kubectl create cm mix-cm --from-literal test1=test2 --from-file service.json --from-env-file env-file 
+kubectl describe cm mix-cm 
+vi configmap-pod.yaml
+kubectl apply -f configmap-pod.yaml
+kubectl get pod configmap-pod 
+kubectl events
+kubectl get nodes
+kubectl get pods
+kubectl get nodes
+kubectl get pods
+kubectl delete all --all
+kubectl get pods
+kubectl get nodes
+kubectl apply -f configmap-pod.yaml 
+kubectl get pods
+kubectl exec -it configmap-pod -- printenv 
+vi configmap-volume-pod.yaml
+kubectl apply -f configmap-volume-pod.yaml
+vi configmap-volume-pod.yaml
+kubectl apply -f configmap-volume-pod.yaml
+kubectl exec -it configmap-volume-pod -- sh
+kubectl edit cm my-configmap 
+kubectl describe cm my-configmap 
+kubectl exec -it configmap-volume-pod -- sh
+kubectl create secret generic mariadb-pass root=securepass123
+kubectl create secret generic mariadb-pass --from-literal root=securepass123
+kubectl get secrets 
+kubectl get secrets  mariadb-pass 
+kubectl describe secrets mariadb-pass 
+kubectl get secrets  mariadb-pass -o yaml
+echo "c2VjdXJlcGFzczEyMw==" | base64 -d ; echo 
+vi root
+kubectl create secret  generic appliction-creds --from-file root 
+kubectl get secrets appliction-creds -o yaml
+kubectl create secret docker-registry quay-creds --docker-server 
+kubectl create secret docker-registry quay-creds --docker-server quay.io --docker-username user1 --docker-password $123secure
+kubectl describe secret quay-creds 
+kubectl get secrets quay-creds -o yaml
+ehco "eyJhdXRocyI6eyJxdWF5LmlvIjp7InVzZXJuYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6IjIzc2VjdXJlIiwiYXV0aCI6ImRYTmxjakU2TWpOelpXTjFjbVU9In19fQ==" | base64 -d 
+echo "eyJhdXRocyI6eyJxdWF5LmlvIjp7InVzZXJuYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6IjIzc2VjdXJlIiwiYXV0aCI6ImRYTmxjakU2TWpOelpXTjFjbVU9In19fQ==" | base64 -d 
+ls -la ../day1
+ls -la ../day2
+kubectl create secret tls books-cert --key ../day2/devops.key --cert ../day2/devops.crt
+kubectl describe secrets books-cert 
+kubectl get secrets books-cert -o yaml
+htpasswd -c .htpasswd mariola
+sudo apt install apache2-utils -y
+htpasswd -c .htpasswd mariola
+kubectl create secret generic nginx-htpasswd --from-file .htpasswd 
+rm .htpasswd 
+vi nginx-config.yaml
+kubectl apply -f nginx-config.yaml
+vi nginx-pod.yaml
+kubectl apply -f nginx-pod.yaml
+kubectl get pod nginx-pod 
+kubectl expose pod nginx-pod --name nginx-svc --type NodePort --port 80
+kubectl label pod nginx-pod svc=web
+kubectl expose pod nginx-pod --name nginx-svc --type NodePort --port 80
+kubectl get svc
+vi security-pod1.yaml
+kubectl apply -f security-pod1.yaml
+kubectl get pods
+kubectl exec -it security-context-demo -- bash
+kubectl exec -it security-context-demo -- sh
+vi security-nginx.yaml
+kubectl apply -f security-nginx.yaml
+kubectl get pods
+kubectl events
+cp -rp security-pod1.yaml security-pod2.yaml 
+vi security-pod2.yaml
+kubectl apply -f security-pod2.yaml
+kubectl get pod
+kubectl exec -it security-context-demo2 -- id
+kubectl create ns np-test 
+kubectl run np-nginx -n np-test --image nginx
+kubectl get -n np-test pod
+cp -rp ../day2/busy-pod.yaml np-busybox.yaml
+vi np-busybox.yaml
+kubectl apply -f np-busybox.yaml -n np-test 
+kubectl get -n np-test pod
+kubectl exec -n np-test -it np-busybox -- bash
+kubectl exec -n np-test -it np-busybox -- sh
+kubectl get -n np-test pod -o wide
+kubectl exec -n np-test -it np-busybox -- sh
+vi my-networkpolicy.yaml
+kubectl get -n np-test pod -o wide --show-labels 
+vi my-networkpolicy.yaml
+kubectl apply -f my-networkpolicy.yaml
+kubectl describe networkpolicies.networking.k8s.io -n np-test my-networkpolicy 
+kubectl exec -n np-test -it np-busybox -- sh
+vi my-networkpolicy.yaml
+kubectl describe ns np-test 
+vi my-networkpolicy.yaml
+kubectl apply -f my-networkpolicy.yaml
+kubectl describe -n np-test networkpolicies.networking.k8s.io my-networkpolicy 
+kubectl exec -n np-test -it np-busybox -- sh
+sudo -i
+kubectl logs -n np-test np-busybox 
+kubectl logs -n np-test np-nginx 
+kubectl run no-shell --image pause:3.1 --restart=Never 
+kubectl get pods
+kubectl delete pod no-shell 
+kubectl run no-shell --image registry.k8s.io/pause:3.1 --restart=Never 
+kubectl delete pod no-shell 
+kubectl run no-shell --image registry.k8s.io/pause:3.1 --restart=Never 
+kubectl get pods
+kubectl exec -it no-shell -- bah
+kubectl exec -it no-shell -- bash
+kubectl exec -it no-shell -- sh
+kubectl debug -it no-shell --image=busybox --target=no-shell
+sudo systemctl status kubelet.service 
+sudo vi /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf 
+which kubelet
+sudo vi /var/lib/kubelet/config.yaml 
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+vi components.yaml
+kubectl apply -f components.yaml
+kubectl get all -n kube-system 
+kubectl top nodes
+kubectl top pods 
+kubectl apply -f ../day2/sidecar-pod.yaml 
+kubectl top nodes
+kubectl top pods 
+kubectl get pods
+kubectl top pods 
+kubectl top pods --containers 
+vi hpa-deployment.yaml
+kubectl apply -f hpa-deployment.yaml
+kubectl get pods
+kubectl get svc
+kubectl autoscale deployment hpa-deployment --max 12 --min 2 --cpu-percent 60 
+kubectl get hpa
+kubectl get deplo
+kubectl get deploy
+kubectl get svc
+kubectl create deployment load-generator --image  fortio/fortio --replicas 1 --dry-run=client -o yaml
+kubectl create deployment load-generator --image  fortio/fortio --replicas 1 --dry-run=client -o yaml > load-generator.yaml
+vi load-generator.yaml
+kubectl apply -f load-generator.yaml
+vi load-generator.yaml
+kubectl apply -f load-generator.yaml
+kubectl get pods
+kubectl get hpa
+watch -n 1 kubectl get hpa
+vi load-generator.yaml 
+kubectl events 
+vi load-generator.yaml 
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done" --dry-run=client -o yaml
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never --dry-run=client -o yaml -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
+kubectl get pods
+kubectl get pod load-generator -o yaml
+kubectl get pods
+kubectl delete pod load-generator
+vi load-generator.yaml 
+kubectl replace --force -f load-generator.yaml
+kubectl get pods
+kubectl events
+vi load-generator.yaml 
+kubectl replace --force -f load-generator.yaml
+kubectl edit deployments.apps hpa-deployment 
+vi load-generator.yaml 
+kubectl edit deployments.apps hpa-deployment 
+kubectl replace --force -f load-generator.yaml
+vi load-generator.yaml 
+kubectl run -i --tty load-generator1 --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://hpa-service; done"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+watch -n1 kubectl get all -n kubernetes-dashboard
+kubectl get sa -n kubernetes-dashboard
+kubectl create sa admin-user -n kubernetes-dashboard 
+kubectl create clusterrolebinding admin-user-binding --help 
+kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:admin-user 
+kubectl get clusterrolebindings.rbac.authorization.k8s.io 
+kubectl get clusterrolebindings.rbac.authorization.k8s.io admin-user-binding 
+kubectl describe clusterrolebindings.rbac.authorization.k8s.io admin-user-binding 
+kubectl -n kubernetes-dashboard create token admin-user
+kubectl -n kubernetes-dashboard get svc
+kubectl -n kubernetes-dashboard edit svc kubernetes-dashboard 
+kubectl -n kubernetes-dashboard get svc
+vi flask-app.yaml
+kubectl apply -f flask-app.yaml
+kubectl get all -n app
+kubectl get all,pvc,pv,ingress,cm,secret,cm -n app
+kubectl rollout restart -n app deployment flask 
+kubectl rollout restart -n app deployment postgres 
+kubectl get all,pvc,pv,ingress,cm,secret,cm -n app
+kubectl delete -f flask-app.yaml 
+git status
+cd ..
+git status
+git add .
+git commit -m "adding day4 files"
+git push
+git pull
+git config pull.rebase false
+git push
+git pull
+git push
+git status
+history
+ls -la
+history| awk '$1 > 898' | cut -c 8- >> day4-history.txt
